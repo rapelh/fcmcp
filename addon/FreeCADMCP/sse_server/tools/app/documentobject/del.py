@@ -3,7 +3,7 @@ import FreeCAD
 from sse_server.sse_server import sse_request_queue, sse_response_queue
 
 tool_type = types.Tool(
-                name="delete_object",
+                name="app-documentobject-del",
                 description="Delete a named object in a named document",
                 inputSchema={
                     "type": "object",
