@@ -42,7 +42,7 @@ async def main():
         result = await client.invoke_tool(
             "std-new", 
             {
-                "name": "TestDoc"
+                "Name": "TestDoc"
             }
         )
         print(f"\nTool result: {result.content}")
@@ -198,6 +198,30 @@ doc.recompute()
         # print(f"\nTool result: {result.content}")
         # print(f"Error code: {result.error_code}")
 
+        print("\nInvoking tool 'std-open'...")
+        result = await client.invoke_tool(
+            "std-open", 
+            {
+                "Path": "/home/ralph-apel/snap/freecad/common/Mod/parts_library/Architectural Parts/Construction blocks/Canal block.FCStd"
+            }
+        )
+        print(f"\nTool result: {result.content}")
+        print(f"Error code: {result.error_code}")
+        result_dict = json.loads(result.content)
+        print(f"Dict: {result_dict}")
+
+        print("\nInvoking tool 'std-saveas'...")
+        result = await client.invoke_tool(
+            "std-saveas", 
+            {
+                "Doc": "TestDoc",
+                "Path": "./TestDoc.FCStd"
+            }
+        )
+        print(f"\nTool result: {result.content}")
+        print(f"Error code: {result.error_code}")
+        result_dict = json.loads(result.content)
+        print(f"Dict: {result_dict}")
 
 
     except Exception as e:
