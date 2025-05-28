@@ -2,7 +2,7 @@ import mcp.types as types
 import FreeCAD
 
 tool_type = types.Tool(
-                name="version",
+                name="app-version",
                 description="Fetches the FreeCAD version and returns its content",
                 inputSchema={
                     "type": "object",
