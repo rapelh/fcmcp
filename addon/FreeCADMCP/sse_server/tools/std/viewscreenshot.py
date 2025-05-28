@@ -7,13 +7,13 @@ import tempfile
 from sse_server.sse_server import sse_request_queue, sse_response_queue
 
 tool_type = types.Tool(
-                name="get_active_screenshot",
+                name="std-viewscreenshot",
                 description="Get screenshot of active view",
                 inputSchema={
                     "type": "object",
                     "required": ["VName"],
                     "properties": {
-                        "VName": {
+                        "ViewName": {
                             "type": "string",
                             "description": "Viev name",
                         }
