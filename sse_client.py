@@ -223,6 +223,18 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
+        print("\nInvoking tool 'std-togglevisibility'...")
+        result = await client.invoke_tool(
+            "std-togglevisibility", 
+            {
+                "Doc": "TestDoc",
+                "Name": "ThirdObj"
+            }
+        )
+        print(f"\nTool result: {result.content}")
+        print(f"Error code: {result.error_code}")
+        result_dict = json.loads(result.content)
+        print(f"Dict: {result_dict}")
 
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
