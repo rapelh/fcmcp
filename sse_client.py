@@ -28,9 +28,9 @@ async def main():
             for param in tool.parameters:
                 print(f"    - {param.name} ({param.parameter_type}): {param.description}")
         
-        print("\nInvoking tool 'app-version'...")
+        print("\nInvoking tool 'App-Version'...")
         result = await client.invoke_tool(
-            "app-version", 
+            "App-Version", 
             {}
         )
         print(f"\nTool result: {result.content}")
@@ -38,9 +38,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'std-new'...")
+        print("\nInvoking tool 'Std-New'...")
         result = await client.invoke_tool(
-            "std-new", 
+            "Std-New", 
             {
                 "Name": "TestDoc"
             }
@@ -50,9 +50,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'app-documentobject-new'...")
+        print("\nInvoking tool 'App-DocumentObject-New'...")
         result = await client.invoke_tool(
-            "app-documentobject-new", 
+            "App-DocumentObject-New", 
             {
                 "Doc": "TestDoc",
                 "Type": "Part::Box",
@@ -70,9 +70,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'app-documentobject-edit'...")
+        print("\nInvoking tool 'App-DocumentObject-Edit'...")
         result = await client.invoke_tool(
-            "app-documentobject-edit", 
+            "App-DocumentObject-Edit", 
             {
                 "Doc": "TestDoc",
                 "Name": "TestObj",
@@ -89,9 +89,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'app-documentobject-new'...")
+        print("\nInvoking tool 'App-DocumentObject-New'...")
         result = await client.invoke_tool(
-            "app-documentobject-new", 
+            "App-DocumentObject-New", 
             {
                 "Doc": "TestDoc",
                 "Type": "Part::Cylinder",
@@ -108,9 +108,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'app-documentobject-new'...")
+        print("\nInvoking tool 'App-DocumentObject-New'...")
         result = await client.invoke_tool(
-            "app-documentobject-new", 
+            "App-DocumentObject-New", 
             {
                 "Doc": "TestDoc",
                 "Type": "Part::Sphere",
@@ -126,9 +126,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'app-documentobject-del'...")
+        print("\nInvoking tool 'App-DocumentObject-Del'...")
         result = await client.invoke_tool(
-            "app-documentobject-del", 
+            "App-DocumentObject-Del", 
             {
                 "Doc": "TestDoc",
                 "Name": "MidObj"
@@ -139,9 +139,9 @@ async def main():
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'executecode'...")
+        print("\nInvoking tool 'ExecuteCode'...")
         result = await client.invoke_tool(
-            "executecode", 
+            "ExecuteCode", 
             {
                 "Code": '''
 import FreeCAD as App
@@ -160,9 +160,9 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        # print("\nInvoking tool 'std-mergeproject-frompartslibrary'...")
+        # print("\nInvoking tool 'Std-MergeProject-FromPartsLibrary'...")
         # result = await client.invoke_tool(
-        #     "std-mergeproject-frompartslibrary", 
+        #     "Std-MergeProject-FromPartsLibrary", 
         #     {
         #         "RelativePath": "Architectural Parts/Construction blocks/Canal block.FCStd"
         #     }
@@ -172,9 +172,9 @@ doc.recompute()
         # result_dict = json.loads(result.content)
         # print(f"Dict: {result_dict}")
 
-        # print("\nInvoking tool 'std-viewscreenshot'...")
+        # print("\nInvoking tool 'Std-ViewScreenshot'...")
         # result = await client.invoke_tool(
-        #     "std-viewscreenshot", 
+        #     "Std-ViewScreenshot", 
         #     {
         #         "ViewName": "Isometric"
         #     }
@@ -198,9 +198,9 @@ doc.recompute()
         # print(f"\nTool result: {result.content}")
         # print(f"Error code: {result.error_code}")
 
-        # print("\nInvoking tool 'std-open'...")
+        # print("\nInvoking tool 'Std-Open'...")
         # result = await client.invoke_tool(
-        #     "std-open", 
+        #     "Std-Open", 
         #     {
         #         "Path": "/home/ralph-apel/snap/freecad/common/Mod/parts_library/Architectural Parts/Construction blocks/Canal block.FCStd"
         #     }
@@ -210,9 +210,9 @@ doc.recompute()
         # result_dict = json.loads(result.content)
         # print(f"Dict: {result_dict}")
 
-        # print("\nInvoking tool 'std-saveas'...")
+        # print("\nInvoking tool 'Std-SaveAs'...")
         # result = await client.invoke_tool(
-        #     "std-saveas", 
+        #     "Std-SaveAs", 
         #     {
         #         "Doc": "TestDoc",
         #         "Path": "./TestDoc.FCStd"
@@ -223,9 +223,9 @@ doc.recompute()
         # result_dict = json.loads(result.content)
         # print(f"Dict: {result_dict}")
 
-        # print("\nInvoking tool 'std-togglevisibility'...")
+        # print("\nInvoking tool 'Std-ToggleVisibility'...")
         # result = await client.invoke_tool(
-        #     "std-togglevisibility", 
+        #     "Std-ToggleVisibility", 
         #     {
         #         "Doc": "TestDoc",
         #         "Name": "ThirdObj"
@@ -236,9 +236,9 @@ doc.recompute()
         # result_dict = json.loads(result.content)
         # print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'part-box'...")
+        print("\nInvoking tool 'Part-Box'...")
         result = await client.invoke_tool(
-            "part-box", 
+            "Part-Box", 
             {
                 "Doc": "TestDoc",
                 "Name": "PartBox",
@@ -254,9 +254,9 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'part-cylinder'...")
+        print("\nInvoking tool 'Part-Cylinder'...")
         result = await client.invoke_tool(
-            "part-cylinder", 
+            "Part-Cylinder", 
             {
                 "Doc": "TestDoc",
                 "Name": "PartCylinder",
@@ -271,9 +271,9 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'part-sphere'...")
+        print("\nInvoking tool 'Part-Sphere'...")
         result = await client.invoke_tool(
-            "part-sphere", 
+            "Part-Sphere", 
             {
                 "Doc": "TestDoc",
                 "Name": "PartSphere",
