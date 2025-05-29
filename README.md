@@ -3,16 +3,21 @@
 
 A MCP server as addon for FreeCAD 1.0+ with SSE transport, based on https://github.com/modelcontextprotocol/python-sdk.
 
+With ideas taken from 
+https://github.com/neka-nat/freecad-mcp
+https://github.com/zanetworker/mcp-sse-client-python
+https://github.com/golf-mcp/golf
+
 Additional tools may be added to addon/FreeCADMCP/sse_server/tools following the examples and these are automatically loaded into the server.
 
 == Installation ==
 
-Copy the folder addon/FreeCADMCP to ~/snap/freecad/common/Mod/ and restart FreeCAD.
+On Ubuntu, copy the folder addon/FreeCADMCP to ~/snap/freecad/common/Mod/ and restart FreeCAD.
 
 == Usage ==
 
-In FreeCAD, select the workbenck "MCP addon". 
+In FreeCAD, select the workbench "MCP addon". 
 
 Start the MCP server with the button labelled "Start SSE Server"
 
-sse_client.py provides examples of tool invokation.
+test?_client.py provide examples of tool invocation.
