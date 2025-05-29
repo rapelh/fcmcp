@@ -21,7 +21,7 @@ def do_it(args):
     )
     res = sse_response_queue.get()
     if res is True:
-        return [types.textContent(type="text", text="ViewTrimetric")]
+        return [types.TextContent(type="text", text="ViewTrimetric")]
     else:
         return [types.TextContent(type="text", text=res)]
 

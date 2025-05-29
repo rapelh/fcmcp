@@ -21,7 +21,7 @@ def do_it(args):
     )
     res = sse_response_queue.get()
     if res is True:
-        return [types.textContent(type="text", text="ViewZoomOut")]
+        return [types.TextContent(type="text", text="ViewZoomOut")]
     else:
         return [types.TextContent(type="text", text=res)]
 

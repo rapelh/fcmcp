@@ -28,7 +28,7 @@ def do_it(args):
     )
     res = sse_response_queue.get()
     if res is True:
-        return [types.textContent(type="text", text=stereo_type)]
+        return [types.TextContent(type="text", text=stereo_type)]
     else:
         return [types.TextContent(type="text", text=res)]
 

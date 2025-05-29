@@ -21,7 +21,7 @@ def do_it(args):
     )
     res, settings = sse_response_queue.get()
     if res is True:
-        return [types.textContent(type="text", text=settings)]
+        return [types.TextContent(type="text", text=settings)]
     else:
         return [types.TextContent(type="text", text=res)]
 
