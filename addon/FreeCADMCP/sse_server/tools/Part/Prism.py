@@ -1,11 +1,11 @@
 import mcp.types as types
 import FreeCAD
-from sse_server.sse_server import sse_request_queue, sse_response_queue, set_object_property, Object
+from sse_server.sse_server import sse_request_queue, sse_response_queue, Object
 from sse_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
-                name="Part-Cylinder",
-                description="Create a named cylinder object in a named document",
+                name="Part-Prism",
+                description="Create a named tube object in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["Doc", "Name"],
@@ -19,26 +19,26 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Properties": {
-                            "Radius": {
+                            "Polygon": {
+                                "type": "int",
+                                "description": "Number of sides of the polygon. Default 6."
+                            }, 
+                            "Circumradius": {
                                 "type": "float",
-                                "description": "Radius of the cylinder to create",
-                            },
+                                "description": "Radius of the circle that circumscribes the polygon, the distance from the center of the polygon to one of its vertices. Default 2mm."
+                            }, 
                             "Height": {
                                 "type": "float",
-                                "description": "Height of the cylinder to create",
-                            },
-                            "Angle": {
-                                "type": "float",
-                                "description": "Circular arc of the cylinder to create. Valid range: 0° < value <= 360°. Default 360°.",
-                            },
+                                "description": "Height of the prism. Default 10mm."
+                            }, 
                             "FirstAngle": {
                                 "type": "float",
-                                "description": "The angle between the extrusion direction of the cylinder and the positive Z axis, measured around the Y axis. Valid range: 0° <= value < 90°. Default 0°.",
-                            },
+                                "description": "Angle between the extrusion direction of the prism and the positive Z axis, measured around the Y axis. Positive towards the positive X axis. Valid range: 0° <= value < 90°. Default 0°."
+                            }, 
                             "SecondAngle": {
                                 "type": "float",
-                                "description": "The angle between the extrusion direction of the cylinder and the positive Z axis, measured around the X axis. Valid range: 0° <= value < 90°. Default 0°.",
-                            }
+                                "description": "Angle between the extrusion direction of the prism and its positive Z axis, measured around its X axis. Positive towards its positive Y axis. Valid range: 0° <= value < 90°. Default 0°."
+                            }, 
                         },
                     },
                 },
@@ -47,8 +47,8 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
-        name=args.get("Name", "Cylinder"),
-        type="Part::Cylinder",
+        name=args.get("Name", "Prism"),
+        type="Part::Prism",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )

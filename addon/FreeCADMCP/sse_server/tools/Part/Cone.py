@@ -1,11 +1,11 @@
 import mcp.types as types
 import FreeCAD
-from sse_server.sse_server import sse_request_queue, sse_response_queue, set_object_property, Object
+from sse_server.sse_server import sse_request_queue, sse_response_queue, Object
 from sse_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
-                name="Part-Sphere",
-                description="Create a named sphere object in a named document",
+                name="Part-Cone",
+                description="Create a named cone object in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["Doc", "Name"],
@@ -19,22 +19,22 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Properties": {
-                            "Radius": {
+                            "Radius1": {
                                 "type": "float",
-                                "description": "Radius of the sphere to create",
+                                "description": "Radius of the bottom face of the cone. Can be 0mm if Radius2 > 0mm. Default 2mm."
                             },
-                            "Angle1": {
+                            "Radius2": {
                                 "type": "float",
-                                "description": "The start angle of the circular arc profile of the sphere. Valid range: -90° <= value <= 90°. Default -90°.",
+                                "description": "Radius of the top face of the cone. Can be 0mm if Radius1 > 0mm. Default 4mm."
                             },
-                            "Angle2": {
+                            "Height": {
                                 "type": "float",
-                                "description": "The end angle of the circular arc profile of the sphere. Valid range: -90° <= value <= 90°. Default 90°.",
+                                "description": "Height of the cone. Default 10mm."
                             },
-                            "Angle3": {
+                            "Angle": {
                                 "type": "float",
-                                "description": "The total angle of revolution of the sphere. Valid range: 0° < value <= 360°. Default 360°.",
-                            }
+                                "description": "Angle of the circular arc that defines the top and bottom face of the cone. Valid range: 0° < value <= 360°. Default 360°."
+                            },
                         }
                     },
                 },
@@ -43,8 +43,8 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
-        name=args.get("Name", "Sphere"),
-        type="Part::Sphere",
+        name=args.get("Name", "Cone"),
+        type="Part::Cone",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )

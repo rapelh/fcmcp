@@ -1,11 +1,11 @@
 import mcp.types as types
 import FreeCAD
-from sse_server.sse_server import sse_request_queue, sse_response_queue, set_object_property, Object
+from sse_server.sse_server import sse_request_queue, sse_response_queue, Object
 from sse_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
-                name="Part-Cylinder",
-                description="Create a named cylinder object in a named document",
+                name="Part-Helix",
+                description="Create a named helix object in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["Doc", "Name"],
@@ -19,26 +19,26 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Properties": {
-                            "Radius": {
+                            "Pitch": {
                                 "type": "float",
-                                "description": "Radius of the cylinder to create",
-                            },
+                                "description": "Distance between two consecutive turns of the helix measured along its Z axis. Default 1mm."
+                            }, 
                             "Height": {
                                 "type": "float",
-                                "description": "Height of the cylinder to create",
-                            },
+                                "description": "Height of the helix. Default 2mm."
+                            }, 
+                            "Radius": {
+                                "type": "float",
+                                "description": "Start radius of the helix. The helix has a constant radius if Angle is 0°."
+                            }, 
+                            "SegmentLength": {
+                                "type": "int",
+                                "description": "Number of turns per helix subdivision. The default is 1, meaning each full turn of the helix is a separate segment. Use 0 to suppress subdivision."
+                            }, 
                             "Angle": {
                                 "type": "float",
-                                "description": "Circular arc of the cylinder to create. Valid range: 0° < value <= 360°. Default 360°.",
-                            },
-                            "FirstAngle": {
-                                "type": "float",
-                                "description": "The angle between the extrusion direction of the cylinder and the positive Z axis, measured around the Y axis. Valid range: 0° <= value < 90°. Default 0°.",
-                            },
-                            "SecondAngle": {
-                                "type": "float",
-                                "description": "The angle between the extrusion direction of the cylinder and the positive Z axis, measured around the X axis. Valid range: 0° <= value < 90°. Default 0°.",
-                            }
+                                "description": "Angle that defines the outer shape of the helix. Valid range: -90° < value < 90°. Default 0°. If it is 0° the helix is cylindrical, else it is conical."
+                            }, 
                         },
                     },
                 },
@@ -47,8 +47,8 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
-        name=args.get("Name", "Cylinder"),
-        type="Part::Cylinder",
+        name=args.get("Name", "Helix"),
+        type="Part::Helix",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )

@@ -1,11 +1,11 @@
 import mcp.types as types
 import FreeCAD
-from sse_server.sse_server import sse_request_queue, sse_response_queue, set_object_property, Object
+from sse_server.sse_server import sse_request_queue, sse_response_queue, Object
 from sse_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
-                name="Part-Box",
-                description="Create a named box object in a named document",
+                name="Part-RegularPolygon",
+                description="Create a named tube object in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["Doc", "Name"],
@@ -19,19 +19,15 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Properties": {
-                            "Length": {
+                            "Polygon": {
+                                "type": "int",
+                                "description": "Number of sides of the polygon. Default 6."
+                            }, 
+                            "Circumradius": {
                                 "type": "float",
-                                "description": "Dimension in the X direction",
-                            },
-                            "Width": {
-                                "type": "float",
-                                "description": "Dimension in the Y direction",
-                            },
-                            "Height": {
-                                "type": "float",
-                                "description": "Dimension in the Z direction",
-                            }
-                        }
+                                "description": "Radius of the circle that circumscribes the polygon, the distance from the center of the polygon to one of its vertices. Default 2mm."
+                            }, 
+                        },
                     },
                 },
             )
@@ -39,8 +35,8 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
-        name=args.get("Name", "Box"),
-        type="Part::Box",
+        name=args.get("Name", "RegularPolygon"),
+        type="Part::RegularPolygon",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )

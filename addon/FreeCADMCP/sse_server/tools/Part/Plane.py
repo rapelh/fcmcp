@@ -1,11 +1,11 @@
 import mcp.types as types
 import FreeCAD
-from sse_server.sse_server import sse_request_queue, sse_response_queue, set_object_property, Object
+from sse_server.sse_server import sse_request_queue, sse_response_queue, Object
 from sse_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
-                name="Part-Sphere",
-                description="Create a named sphere object in a named document",
+                name="Part-Plane",
+                description="Create a named plane object in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["Doc", "Name"],
@@ -19,23 +19,15 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Properties": {
-                            "Radius": {
+                            "Length": {
                                 "type": "float",
-                                "description": "Radius of the sphere to create",
-                            },
-                            "Angle1": {
+                                "description": "Length of the plane in the X direction. Default 10mm."
+                            }, 
+                            "Width": {
                                 "type": "float",
-                                "description": "The start angle of the circular arc profile of the sphere. Valid range: -90° <= value <= 90°. Default -90°.",
-                            },
-                            "Angle2": {
-                                "type": "float",
-                                "description": "The end angle of the circular arc profile of the sphere. Valid range: -90° <= value <= 90°. Default 90°.",
-                            },
-                            "Angle3": {
-                                "type": "float",
-                                "description": "The total angle of revolution of the sphere. Valid range: 0° < value <= 360°. Default 360°.",
-                            }
-                        }
+                                "description": "Width of the plane in the Y direction. Default 10mm."
+                            }, 
+                        },
                     },
                 },
             )
@@ -43,8 +35,8 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
-        name=args.get("Name", "Sphere"),
-        type="Part::Sphere",
+        name=args.get("Name", "Plane"),
+        type="Part::Plane",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
