@@ -160,33 +160,33 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'std-mergeproject-frompartslibrary'...")
-        result = await client.invoke_tool(
-            "std-mergeproject-frompartslibrary", 
-            {
-                "RelativePath": "Architectural Parts/Construction blocks/Canal block.FCStd"
-            }
-        )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        # print("\nInvoking tool 'std-mergeproject-frompartslibrary'...")
+        # result = await client.invoke_tool(
+        #     "std-mergeproject-frompartslibrary", 
+        #     {
+        #         "RelativePath": "Architectural Parts/Construction blocks/Canal block.FCStd"
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'std-viewscreenshot'...")
-        result = await client.invoke_tool(
-            "std-viewscreenshot", 
-            {
-                "ViewName": "Isometric"
-            }
-        )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        # print("\nInvoking tool 'std-viewscreenshot'...")
+        # result = await client.invoke_tool(
+        #     "std-viewscreenshot", 
+        #     {
+        #         "ViewName": "Isometric"
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
 
-        png_data = base64.b64decode(result_dict['data'])
-        with open('test.png', 'wb') as f:
-            f.write(png_data)
+        # png_data = base64.b64decode(result_dict['data'])
+        # with open('test.png', 'wb') as f:
+        #     f.write(png_data)
 
         # print("\nInvoking tool 'list_document'...")
         # result = await client.invoke_tool(
@@ -198,11 +198,55 @@ doc.recompute()
         # print(f"\nTool result: {result.content}")
         # print(f"Error code: {result.error_code}")
 
-        print("\nInvoking tool 'std-open'...")
+        # print("\nInvoking tool 'std-open'...")
+        # result = await client.invoke_tool(
+        #     "std-open", 
+        #     {
+        #         "Path": "/home/ralph-apel/snap/freecad/common/Mod/parts_library/Architectural Parts/Construction blocks/Canal block.FCStd"
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
+
+        # print("\nInvoking tool 'std-saveas'...")
+        # result = await client.invoke_tool(
+        #     "std-saveas", 
+        #     {
+        #         "Doc": "TestDoc",
+        #         "Path": "./TestDoc.FCStd"
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
+
+        # print("\nInvoking tool 'std-togglevisibility'...")
+        # result = await client.invoke_tool(
+        #     "std-togglevisibility", 
+        #     {
+        #         "Doc": "TestDoc",
+        #         "Name": "ThirdObj"
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
+
+        print("\nInvoking tool 'part-box'...")
         result = await client.invoke_tool(
-            "std-open", 
+            "part-box", 
             {
-                "Path": "/home/ralph-apel/snap/freecad/common/Mod/parts_library/Architectural Parts/Construction blocks/Canal block.FCStd"
+                "Doc": "TestDoc",
+                "Name": "PartBox",
+                "Properties": {
+                    "Length": 135,
+                    "Width": 155,
+                    "Height": 185
+                }
             }
         )
         print(f"\nTool result: {result.content}")
@@ -210,12 +254,16 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'std-saveas'...")
+        print("\nInvoking tool 'part-cylinder'...")
         result = await client.invoke_tool(
-            "std-saveas", 
+            "part-cylinder", 
             {
                 "Doc": "TestDoc",
-                "Path": "./TestDoc.FCStd"
+                "Name": "PartCylinder",
+                "Properties": {
+                    "Radius": 35,
+                    "Height": 185
+                }
             }
         )
         print(f"\nTool result: {result.content}")
@@ -223,12 +271,15 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'std-togglevisibility'...")
+        print("\nInvoking tool 'part-sphere'...")
         result = await client.invoke_tool(
-            "std-togglevisibility", 
+            "part-sphere", 
             {
                 "Doc": "TestDoc",
-                "Name": "ThirdObj"
+                "Name": "PartSphere",
+                "Properties": {
+                    "Radius": 75,
+                }
             }
         )
         print(f"\nTool result: {result.content}")
