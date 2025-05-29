@@ -1,7 +1,7 @@
 import mcp.types as types
 import FreeCAD
 from sse_server.sse_server import sse_request_queue, sse_response_queue, set_object_property, Object
-from addon.FreeCADMCP.sse_server.tools.App.DocumentObject.New import _create_object_gui
+from sse_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
                 name="Part-Box",
