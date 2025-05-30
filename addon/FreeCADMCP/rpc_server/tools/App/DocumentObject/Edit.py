@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, set_object_property, Object
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, set_object_property, Object
 
 tool_type = types.Tool(
                 name="App-DocumentObject-Edit",

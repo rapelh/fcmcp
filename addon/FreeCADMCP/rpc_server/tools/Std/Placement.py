@@ -1,7 +1,7 @@
 import mcp.types as types
 import FreeCAD
 import math
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
 
 tool_type = types.Tool(
                 name="Std-Placement",
@@ -96,8 +96,8 @@ def do_it(args):
     if mode == "AAP":
         angle = rotation.get("Angle", 0)
         axis = rotation.get("Axis", {"X": 0, "Y": 0, "Z": 1})
-        rcp_request_queue.put(lambda: _aap_placement_gui(doc_name, obj_name, angle, axis, position, center))
-        res = rcp_response_queue.get()
+        rpc_request_queue.put(lambda: _aap_placement_gui(doc_name, obj_name, angle, axis, position, center))
+        res = rpc_response_queue.get()
         if res is True:
             return [types.TextContent(type="text", text="AAP")]
         else:
@@ -106,8 +106,8 @@ def do_it(args):
         yaw = rotation.get("Yaw", 0)
         pitch = rotation.get("Pitch", 0)
         roll = rotation.get("Roll", 0)
-        rcp_request_queue.put(lambda: _pypr_placement_gui(doc_name, obj_name, position, yaw, pitch, roll, center))
-        res = rcp_response_queue.get()
+        rpc_request_queue.put(lambda: _pypr_placement_gui(doc_name, obj_name, position, yaw, pitch, roll, center))
+        res = rpc_response_queue.get()
         if res is True:
             return [types.TextContent(type="text", text="PYPR")]
         else:

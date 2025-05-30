@@ -4,7 +4,7 @@ import FreeCADGui
 import base64
 import os
 import tempfile
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
 
 tool_type = types.Tool(
                 name="Std-ViewScreenshot",
@@ -46,8 +46,8 @@ def do_it(args):
             FreeCAD.Console.PrintError(f"Error checking view capabilities: {e}\n")
             return False
                 
-    rcp_request_queue.put(check_view_supports_screenshots)
-    supports_screenshots = rcp_response_queue.get()
+    rpc_request_queue.put(check_view_supports_screenshots)
+    supports_screenshots = rpc_response_queue.get()
         
     if not supports_screenshots:
         FreeCAD.Console.PrintWarning("Current view does not support screenshots\n")
@@ -56,10 +56,10 @@ def do_it(args):
     # If view supports screenshots, proceed with capture
     fd, tmp_path = tempfile.mkstemp(suffix=".png")
     os.close(fd)
-    rcp_request_queue.put(
+    rpc_request_queue.put(
         lambda: _save_active_screenshot(tmp_path, view_name)
     )
-    res = rcp_response_queue.get()
+    res = rpc_response_queue.get()
     if res is True:
         try:
             with open(tmp_path, "rb") as image_file:

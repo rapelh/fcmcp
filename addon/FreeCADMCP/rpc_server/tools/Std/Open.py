@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
 
 tool_type = types.Tool(
                 name="Std-Open",
@@ -20,8 +20,8 @@ tool_type = types.Tool(
 
 def do_it(args):
     path = args.get('Path')
-    rcp_request_queue.put(lambda: _open_document_gui(path))
-    res = rcp_response_queue.get()
+    rpc_request_queue.put(lambda: _open_document_gui(path))
+    res = rpc_response_queue.get()
     if res is True:
         return [types.TextContent(type="text", text=path)]
     else:

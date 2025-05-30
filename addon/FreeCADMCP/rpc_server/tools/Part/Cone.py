@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
 from rpc_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
@@ -32,7 +32,7 @@ tool_type = types.Tool(
                                 "description": "Height of the cone. Default 10mm."
                             },
                             "Angle": {
-                                "type": "float",
+                                "type": "flot",
                                 "description": "Angle of the circular arc that defines the top and bottom face of the cone. Valid range: 0° < value <= 360°. Default 360°."
                             },
                         }

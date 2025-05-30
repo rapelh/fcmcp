@@ -1,7 +1,7 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue, Object
-from rcp_server.tools.App.DocumentObject.New import _create_object_gui
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.tools.App.DocumentObject.New import _create_object_gui
 
 tool_type = types.Tool(
                 name="Part-Plane",

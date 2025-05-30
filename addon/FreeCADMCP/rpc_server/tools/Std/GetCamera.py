@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCADGui
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
 
 tool_type = types.Tool(
                 name="Std-GetCamera",
@@ -16,10 +16,10 @@ def do_it(args):
     """Get active 3D view camera settings.
     """
                 
-    rcp_request_queue.put(
+    rpc_request_queue.put(
         lambda: _get_camera()
     )
-    res, settings = rcp_response_queue.get()
+    res, settings = rpc_response_queue.get()
     if res is True:
         return [types.TextContent(type="text", text=settings)]
     else:

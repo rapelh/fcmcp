@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
 
 tool_type = types.Tool(
                 name="Part-Extrude",

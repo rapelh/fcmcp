@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
 
 tool_type = types.Tool(
                 name="Std-SaveAs",
@@ -25,8 +25,8 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get('Doc')
     path = args.get('Path')
-    rcp_request_queue.put(lambda: _saveas_document_gui(doc_name, path))
-    res = rcp_response_queue.get()
+    rpc_request_queue.put(lambda: _saveas_document_gui(doc_name, path))
+    res = rpc_response_queue.get()
     if res is True:
         return [types.TextContent(type="text", text=path)]
     else:

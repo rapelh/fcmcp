@@ -1,6 +1,6 @@
 import mcp.types as types
 import FreeCAD
-from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
 
 tool_type = types.Tool(
                 name="Std-MergeProject-FromAbsolute",
@@ -19,8 +19,8 @@ tool_type = types.Tool(
 
 def do_it(args):
     absolute_path = args.get('AbsolutePath')
-    rcp_request_queue.put(lambda: _insert_part_from_absolute(absolute_path))
-    res = rcp_response_queue.get()
+    rpc_request_queue.put(lambda: _insert_part_from_absolute(absolute_path))
+    res = rpc_response_queue.get()
     if res is True:
         return [types.TextContent(type="text", text=absolute_path)]
     else:

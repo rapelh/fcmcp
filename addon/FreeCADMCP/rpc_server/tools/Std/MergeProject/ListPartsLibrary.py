@@ -1,5 +1,5 @@
 import mcp.types as types
-from rcp_server.parts_library import get_parts_list
+from rpc_server.parts_library import get_parts_list
 
 tool_type = types.Tool(
                 name="Std-MergeProject-ListPartsLibrary",
