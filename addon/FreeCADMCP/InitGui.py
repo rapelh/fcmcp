@@ -3,7 +3,7 @@ class FreeCADMCPAddonWorkbench(Workbench):
     ToolTip = "Addon for MCP Communication"
 
     def Initialize(self):
-        from sse_server import sse_server
+        from addon.FreeCADMCP.rpc_server import rpc_server
 
         commands = ["Start_SSE_Server", "Stop_SSE_Server"]
         self.appendToolbar("FreeCAD MCP", commands)

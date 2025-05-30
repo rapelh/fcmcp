@@ -18,6 +18,6 @@ On Ubuntu, copy the folder addon/FreeCADMCP to ~/snap/freecad/common/Mod/ and re
 
 In FreeCAD, select the workbench "MCP addon". 
 
-Start the MCP server with the button labelled "Start SSE Server"
+Start the MCP server with the button labelled "Start RPC Server"
 
 test?_client.py provide examples of tool invocation.

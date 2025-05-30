@@ -1,0 +1,80 @@
+import mcp.types as types
+import FreeCAD
+from addon.FreeCADMCP.rcp_server.rpc_server import rcp_request_queue, rcp_response_queue, Object
+from rcp_server.tools.App.DocumentObject.New import _create_object_gui
+
+tool_type = types.Tool(
+                name="Part-Wedge",
+                description="Create a named tube object in a named document",
+                inputSchema={
+                    "type": "object",
+                    "required": ["Doc", "Name"],
+                    "properties": {
+                        "Doc": {
+                            "type": "string",
+                            "description": "Name of document in which to create",
+                        },
+                        "Name": {
+                            "type": "string",
+                            "description": "Name of object to create",
+                        },
+                        "Properties": {
+                            "Xmin": {
+                                "type": "float",
+                                "description": "Lowest X coordinate of the front face of the wedge. Default 0mm."
+                            }, 
+                            "Ymin": {
+                                "type": "float",
+                                "description": "Y coordinate of the front face of the wedge. Default 0mm."
+                            }, 
+                            "Zmin": {
+                                "type": "float",
+                                "description": "Lowest Z coordinate of the front face of the wedge. Default 0mm."
+                            }, 
+                            "X2min": {
+                                "type": "float",
+                                "description": "Lowest X coordinate of the rear face of the wedge. Default 2mm."
+                            }, 
+                            "Z2min": {
+                                "type": "float",
+                                "description": "Lowest Z coordinate of the rear face of the wedge. Default 2mm."
+                            }, 
+                            "Xmax": {
+                                "type": "float",
+                                "description": "Highest X coordinate of the front face of the wedge. Default 10mm."
+                            }, 
+                            "Ymax": {
+                                "type": "float",
+                                "description": "Y coordinate of the rear face of the wedge. Default 10mm."
+                            }, 
+                            "Zmax": {
+                                "type": "float",
+                                "description": "Highest Z coordinate of the front face of the wedge. Default 10mm."
+                            }, 
+                            "X2max": {
+                                "type": "float",
+                                "description": "Highest X coordinate of the rear face of the wedge. Default 8mm."
+                            }, 
+                            "Z2max": {
+                                "type": "float",
+                                "description": "Highest Z coordinate of the rear face of the wedge. Default 8mm."
+                            }, 
+                        },
+                    },
+                },
+            )
+
+def do_it(args):
+    doc_name = args.get("Doc")
+    obj = Object(
+        name=args.get("Name", "Wedge"),
+        type="Part::Wedge",
+        analysis=args.get("Analysis", None),
+        properties=args.get("Properties", {}),
+    )
+    rcp_request_queue.put(lambda: _create_object_gui(doc_name, obj))
+    res = rcp_response_queue.get()
+    if res is True:
+        return [types.TextContent(type="text", text=obj.name)]
+    else:
+        return [types.TextContent(type="text", text=res)]
