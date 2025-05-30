@@ -198,17 +198,17 @@ doc.recompute()
         # print(f"\nTool result: {result.content}")
         # print(f"Error code: {result.error_code}")
 
-        print("\nInvoking tool 'Std-Open'...")
-        result = await client.invoke_tool(
-            "Std-Open", 
-            {
-                "Path": "/home/ralph-apel/snap/freecad/common/Mod/parts_library/Architectural Parts/Construction blocks/Canal block.FCStd"
-            }
-        )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        # print("\nInvoking tool 'Std-Open'...")
+        # result = await client.invoke_tool(
+        #     "Std-Open", 
+        #     {
+        #         "Path": "/home/ralph-apel/snap/freecad/common/Mod/parts_library/Architectural Parts/Construction blocks/Canal block.FCStd"
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
 
         # print("\nInvoking tool 'Std-SaveAs'...")
         # result = await client.invoke_tool(
@@ -287,18 +287,57 @@ doc.recompute()
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
 
-        print("\nInvoking tool 'Std-SetActiveDocument'...")
+        print("\nInvoking tool 'Part-Cone'...")
         result = await client.invoke_tool(
-            "Std-SetActiveDocument", 
+            "Part-Cone", 
             {
-                "Doc": "Canal_block",
-                "Properties": { }
+                "Doc": "TestDoc",
+                "Name": "PartCone",
+                "Properties": {
+                    "Radius1": 5,
+                    "Radius2": 10,
+                    "Height": 50,
+                    "Angle": 270
+                }
             }
         )
         print(f"\nTool result: {result.content}")
         print(f"Error code: {result.error_code}")
         result_dict = json.loads(result.content)
         print(f"Dict: {result_dict}")
+
+        print("\nInvoking tool 'Part-Torus'...")
+        result = await client.invoke_tool(
+            "Part-Torus", 
+            {
+                "Doc": "TestDoc",
+                "Name": "PartTorus",
+                "Properties": {
+                    "Radius1": 20,
+                    "Radius2": 10,
+                    "Angle1": -90,
+                    "Angle2": 45,
+                    "Angle3": 270
+                }
+            }
+        )
+        print(f"\nTool result: {result.content}")
+        print(f"Error code: {result.error_code}")
+        result_dict = json.loads(result.content)
+        print(f"Dict: {result_dict}")
+
+        # print("\nInvoking tool 'Std-SetActiveDocument'...")
+        # result = await client.invoke_tool(
+        #     "Std-SetActiveDocument", 
+        #     {
+        #         "Doc": "Canal_block",
+        #         "Properties": { }
+        #     }
+        # )
+        # print(f"\nTool result: {result.content}")
+        # print(f"Error code: {result.error_code}")
+        # result_dict = json.loads(result.content)
+        # print(f"Dict: {result_dict}")
 
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
