@@ -1,9 +1,11 @@
 import mcp.types as types
 import FreeCAD
+import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
-                name="Part-Extrude",
+                name="Part-Extrusion",
                 description="Create a named extrude object in a named document",
                 inputSchema={
                     "type": "object",
@@ -81,35 +83,36 @@ def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
         name=args.get("Name", "Extrude"),
-        type="Part::Extrude",
+        type="Part::Extrusion",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
     rpc_request_queue.put(lambda: _extrude_shape_gui(doc_name, obj))
-    res = rpc_response_queue.get()
-    if res is True:
-        return [types.TextContent(type="text", text=obj.name)]
-    else:
-        return [types.TextContent(type="text", text=res)]
+    res, text = rpc_response_queue.get()
+    return [types.TextContent(type="text", text=text)]
 
 def _extrude_shape_gui(doc_name, obj_in):
     doc = FreeCAD.getDocument(doc_name)
     if not doc:
         FreeCAD.Console.PrintError(f"Document '{doc_name}' not found.\n")
-        return f"Document '{doc_name}' not found.\n"
+        return False, f"Document '{doc_name}' not found.\n"
     try:
         obj = doc.addObject(obj_in.type, obj_in.name)
+        FreeCAD.Console.PrintMessage(f"Properties in '{obj_in.properties}'.\n")
+        FreeCAD.Console.PrintMessage(f"Properties Extrusion '{obj.PropertiesList}'.\n")
         obj.Base = doc.getObject(obj_in.properties["Base"])
         obj.DirMode = obj_in.properties["DirMode"]
         obj.DirLink = doc.getObject(obj_in.properties["DirLink"])
-        obj.LengthFwd = obj_in.properties["LengthFwd"]
-        obj.LengthRev = obj_in.properties["LengthRev"]
+        obj.Dir = FreeCAD.Vector(obj_in.properties["Dir"]["X"], obj_in.properties["Dir"]["Y"], obj_in.properties["Dir"]["Z"])
+        obj.LengthFwd = float(obj_in.properties["LengthFwd"])
+        obj.LengthRev = float(obj_in.properties["LengthRev"])
         obj.Solid = obj_in.properties["Solid"]
         obj.Reversed = obj_in.properties["Reversed"]
         obj.Symmetric = obj_in.properties["Symmetric"]
         obj.TaperAngle = obj_in.properties["TaperAngle"]
         obj.TaperAngleRev = obj_in.properties["TaperAngleRev"]
         doc.recompute()
-        return True
+        FreeCAD.Console.PrintMessage(f"Extrusion '{serialize_object(obj)}'.\n")
+        return True, json.dumps(serialize_object(obj))
     except Exception as e:
-        return str(e)
+        return False, str(e)
