@@ -21,14 +21,14 @@ tool_type = types.Tool(
 def do_it(args):
     name = args.get('Name')
     rpc_request_queue.put(lambda: _create_document_gui(name))
-    res = rpc_response_queue.get()
+    res, text = rpc_response_queue.get()
     if res is True:
-        return [types.TextContent(type="text", text=name)]
+        return [types.TextContent(type="text", text=text)]
     else:
-        return [types.TextContent(type="text", text=res)]
+        return [types.TextContent(type="text", text=text)]
 
 def _create_document_gui(name):
     doc = FreeCAD.newDocument(name)
     doc.recompute()
     FreeCAD.Console.PrintMessage(f"Document '{name}' created via RPC.\n")
-    return True
+    return True, f"{name} created"

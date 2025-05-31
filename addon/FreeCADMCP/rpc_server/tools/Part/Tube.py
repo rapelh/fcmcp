@@ -1,7 +1,9 @@
 import mcp.types as types
 import FreeCAD
-from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
-from rpc_server.tools.App.DocumentObject.New import _create_object_gui
+import json
+from BasicShapes import Shapes
+from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, set_object_property, Object
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
                 name="Part-Tube",
@@ -44,9 +46,13 @@ def do_it(args):
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _create_object_gui(doc_name, obj))
-    res = rpc_response_queue.get()
-    if res is True:
-        return [types.TextContent(type="text", text=obj.name)]
-    else:
-        return [types.TextContent(type="text", text=res)]
+    rpc_request_queue.put(lambda: _create_tube_gui(doc_name, obj))
+    res, text = rpc_response_queue.get()
+    return [types.TextContent(type="text", text=text)]
+
+def _create_tube_gui(doc_name, obj):
+    doc = FreeCAD.getDocument(doc_name)
+    tube = Shapes.addTube(doc, obj.name)
+    set_object_property(doc, tube, obj.properties)
+    doc.recompute()
+    return True, json.dumps(serialize_object(tube))

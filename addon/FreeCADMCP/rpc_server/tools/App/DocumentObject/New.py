@@ -1,6 +1,8 @@
 import mcp.types as types
 import FreeCAD
+import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, set_object_property, Object
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
                 name="App-DocumentObject-New",
@@ -41,7 +43,6 @@ tool_type = types.Tool(
                 },
             )
 
-#def create_object(self, doc_name, obj_data: dict[str, Any]):
 def do_it(args):
     doc_name = args.get("Doc")
     obj = Object(
@@ -51,11 +52,11 @@ def do_it(args):
         properties=args.get("Properties", {}),
     )
     rpc_request_queue.put(lambda: _create_object_gui(doc_name, obj))
-    res = rpc_response_queue.get()
+    res, text = rpc_response_queue.get()
     if res is True:
-        return [types.TextContent(type="text", text=obj.name)]
+        return [types.TextContent(type="text", text=text)]
     else:
-        return [types.TextContent(type="text", text=res)]
+        return [types.TextContent(type="text", text=text)]
 
 def _create_object_gui(doc_name, obj: Object):
     doc = FreeCAD.getDocument(doc_name)
@@ -111,9 +112,9 @@ def _create_object_gui(doc_name, obj: Object):
                 )
  
             doc.recompute()
-            return True
+            return True, json.dumps(serialize_object(res))
         except Exception as e:
-            return str(e)
+            return False, str(e)
     else:
         FreeCAD.Console.PrintError(f"Document '{doc_name}' not found.\n")
-        return f"Document '{doc_name}' not found.\n"
+        return False, f"Document '{doc_name}' not found.\n"

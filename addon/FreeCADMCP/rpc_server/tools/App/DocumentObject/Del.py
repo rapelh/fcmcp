@@ -26,9 +26,9 @@ def do_it(args):
     doc_name = args.get('Doc')
     obj_name = args.get('Name')
     rpc_request_queue.put(lambda: _delete_object_gui(doc_name, obj_name))
-    res = rpc_response_queue.get()
+    res, text = rpc_response_queue.get()
     if res is True:
-        return [types.TextContent(type="text", text=obj_name)]
+        return [types.TextContent(type="text", text=text)]
     else:
         return [types.TextContent(type="text", text=res)]
 
@@ -36,12 +36,12 @@ def _delete_object_gui(doc_name: str, obj_name: str):
     doc = FreeCAD.getDocument(doc_name)
     if not doc:
         FreeCAD.Console.PrintError(f"Document '{doc_name}' not found.\n")
-        return f"Document '{doc_name}' not found.\n"
+        return False, f"Document '{doc_name}' not found.\n"
 
     try:
         doc.removeObject(obj_name)
         doc.recompute()
-        FreeCAD.Console.PrintMessage(f"Object '{obj_name}' deleted via SSE.\n")
-        return True
+        FreeCAD.Console.PrintMessage(f"Object '{obj_name}' deleted via RPC.\n")
+        return True, f"{obj_name} deleted"
     except Exception as e:
-        return str(e)
+        return False, str(e)

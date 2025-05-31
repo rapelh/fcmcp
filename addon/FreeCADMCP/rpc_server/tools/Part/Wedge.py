@@ -73,8 +73,5 @@ def do_it(args):
         properties=args.get("Properties", {}),
     )
     rpc_request_queue.put(lambda: _create_object_gui(doc_name, obj))
-    res = rpc_response_queue.get()
-    if res is True:
-        return [types.TextContent(type="text", text=obj.name)]
-    else:
-        return [types.TextContent(type="text", text=res)]
+    res, text = rpc_response_queue.get()
+    return [types.TextContent(type="text", text=text)]
