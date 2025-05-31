@@ -10,6 +10,19 @@ import json
 import sys
 from client.mcp_sse_client.client import MCPClient
 
+def format_result(result):
+    res_dict = json.loads(result.content)
+    if result.error_code == 0:
+        print("Success")
+        if res_dict["type"] == "text":
+            print(res_dict["text"])
+        elif res_dict["type"] == "image":
+            print(res_dict["data"], res_dict["mimeType"])
+    else:
+        print("Failure", result.error_code)
+        if res_dict["type"] == "text":
+            print(res_dict["text"])
+
 async def main():
     print("Starting MCPClient ...")
     try:
@@ -24,12 +37,9 @@ async def main():
                 "Name": "TestDoc"
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
-        print("\nInvoking tool 'Part-Box..")
+        print("\nInvoking tool 'Part-Box'...")
         result = await client.invoke_tool(
             "Part-Box", 
             {
@@ -43,10 +53,7 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Circle'...")
         result = await client.invoke_tool(
@@ -62,17 +69,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Cone'...")
         result = await client.invoke_tool(
             "Part-Cone", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestCone"
+                "Name": "TestCone",
                 "Properties":
                 {
                     "Radius1": 30.0,
@@ -82,17 +86,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Cylinder'...")
         result = await client.invoke_tool(
             "Part-Cylinder", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestCylinder"
+                "Name": "TestCylinder",
                 "Properties":
                 {
                     "Radius": 30.0,
@@ -103,17 +104,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Ellipse'...")
         result = await client.invoke_tool(
             "Part-Ellipse", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestEllipse"
+                "Name": "TestEllipse",
                 "Properties":
                 {
                     "MajorRadius": 130.0,
@@ -123,17 +121,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Ellipsoid'...")
         result = await client.invoke_tool(
             "Part-Ellipsoid", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestEllipsoid"
+                "Name": "TestEllipsoid",
                 "Properties":
                 {
                     "Radius1": 130.0,
@@ -145,17 +140,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Helix'...")
         result = await client.invoke_tool(
             "Part-Helix", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestHelix"
+                "Name": "TestHelix",
                 "Properties":
                 {
                     "Pitch": 10.0,
@@ -166,17 +158,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Line'...")
         result = await client.invoke_tool(
             "Part-Line", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestLine"
+                "Name": "TestLine",
                 "Properties":
                 {
                     "X1": 10.0,
@@ -188,17 +177,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Plane'...")
         result = await client.invoke_tool(
             "Part-Plane", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestPlane"
+                "Name": "TestPlane",
                 "Properties":
                 {
                     "Length": 180.0,
@@ -206,17 +192,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Point'...")
         result = await client.invoke_tool(
             "Part-Point", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestPoint"
+                "Name": "TestPoint",
                 "Properties":
                 {
                     "X": 180.0,
@@ -225,17 +208,14 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'Part-Prism'...")
         result = await client.invoke_tool(
             "Part-Prism", 
             {
                 "Doc": "TestDoc",
-                "Name": "TestPrism"
+                "Name": "TestPrism",
                 "Properties":
                 {
                     "Polygon": 5,
@@ -245,10 +225,141 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
+
+        print("\nInvoking tool 'Part-RegularPolygon'...")
+        result = await client.invoke_tool(
+            "Part-RegularPolygon", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestRegularPolygon",
+                "Properties":
+                {
+                    "Polygon": 6,
+                    "Circumradius": 225.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Sphere'...")
+        result = await client.invoke_tool(
+            "Part-Sphere", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestSphere",
+                "Properties":
+                {
+                    "Radius": 60.0,
+                    "Angle1": -25.0,
+                    "Angle2": 25.0,
+                    "Angle3": 55.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Spiral'...")
+        result = await client.invoke_tool(
+            "Part-Spiral", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestSpiral",
+                "Properties":
+                {
+                    "Radius": 160.0,
+                    "Growth": 5.0,
+                    "Rotations": 5,
+                    "SegmentLength": 1,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Torus'...")
+        result = await client.invoke_tool(
+            "Part-Torus", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestTorus",
+                "Properties":
+                {
+                    "Radius1": 160.0,
+                    "Radius2": 20.0,
+                    "Angle1": 50.0,
+                    "Angle2": -30.0,
+                    "Angle3": 180.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Tube'...")
+        result = await client.invoke_tool(
+            "Part-Tube", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestTube",
+                "Properties":
+                {
+                    "InnerRadius": 40.0,
+                    "OuterRadius": 60.0,
+                    "Height": 150.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Wedge'...")
+        result = await client.invoke_tool(
+            "Part-Wedge", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestWedge",
+                "Properties":
+                {
+                    "Xmin": 0.0,
+                    "Ymin": 0.0,
+                    "Zmin": 0.0,
+                    "X2min": 2.0,
+                    "Z2min": 2.0,
+                    "Xmax": 10.0,
+                    "Ymax": 10.0,
+                    "Zmax": 10.0,
+                    "X2max": 8.0,
+                    "Z2max": 8.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Extrusion'...")
+        result = await client.invoke_tool(
+            "Part-Extrusion", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestExtrude",
+                "Properties":
+                {
+                    "Base": "TestCircle",
+                    "DirMode": "Custom",
+                    "Dir": {
+                        "X": 0.0,
+                        "Y": 0.0,
+                        "Z": 1.0,
+                    },
+                    "DirLink": "",
+                    "LengthFwd": 20.0,
+                    "LengthRev": 10.0,
+                    "Solid": False,
+                    "Reversed": False,
+                    "Symmetric": False,
+                    "TaperAngle": 0.0,
+                    "TaperAngleRev": 0.0,
+                }
+            }
+        )
+        format_result(result)
 
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

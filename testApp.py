@@ -10,6 +10,20 @@ import json
 import sys
 from client.mcp_sse_client.client import MCPClient
 
+def format_result(result):
+    res_dict = json.loads(result.content)
+    if result.error_code == 0:
+        print("Success")
+        if res_dict["type"] == "text":
+            print(res_dict["text"])
+        elif res_dict["type"] == "image":
+            print(res_dict["data"], res_dict["mimeType"])
+    else:
+        print("Failure", result.error_code)
+        if res_dict["type"] == "text":
+            print(res_dict["text"])
+
+   
 async def main():
     print("Starting MCPClient ...")
     try:
@@ -24,10 +38,7 @@ async def main():
                 "Name": "TestDoc"
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'App-DocumentObject-New'...")
         result = await client.invoke_tool(
@@ -44,10 +55,7 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'App-DocumentObject-Edit'...")
         result = await client.invoke_tool(
@@ -63,10 +71,7 @@ async def main():
                 }
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
         print("\nInvoking tool 'App-DocumentObject-Del'...")
         result = await client.invoke_tool(
@@ -76,10 +81,7 @@ async def main():
                 "Name": "TestObj"
             }
         )
-        print(f"\nTool result: {result.content}")
-        print(f"Error code: {result.error_code}")
-        result_dict = json.loads(result.content)
-        print(f"Dict: {result_dict}")
+        format_result(result)
 
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
