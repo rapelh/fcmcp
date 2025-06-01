@@ -175,6 +175,7 @@ cython_debug/
 
 # test output
 *.png
+*.out
 
 # vscode
 *.code-workspace
