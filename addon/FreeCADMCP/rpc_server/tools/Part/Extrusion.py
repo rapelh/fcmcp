@@ -98,8 +98,6 @@ def _extrude_shape_gui(doc_name, obj_in):
         return False, f"Document '{doc_name}' not found.\n"
     try:
         obj = doc.addObject(obj_in.type, obj_in.name)
-        FreeCAD.Console.PrintMessage(f"Properties in '{obj_in.properties}'.\n")
-        FreeCAD.Console.PrintMessage(f"Properties Extrusion '{obj.PropertiesList}'.\n")
         obj.Base = doc.getObject(obj_in.properties["Base"])
         obj.DirMode = obj_in.properties["DirMode"]
         obj.DirLink = doc.getObject(obj_in.properties["DirLink"])
@@ -112,7 +110,17 @@ def _extrude_shape_gui(doc_name, obj_in):
         obj.TaperAngle = obj_in.properties["TaperAngle"]
         obj.TaperAngleRev = obj_in.properties["TaperAngleRev"]
         doc.recompute()
-        FreeCAD.Console.PrintMessage(f"Extrusion '{serialize_object(obj)}'.\n")
-        return True, json.dumps(serialize_object(obj))
     except Exception as e:
+        FreeCAD.Console.PrintError(f"Object '{obj.__class__}' could not be created: '{str(e)}'.\n")
+        return False, str(e)
+    try:
+        ser = serialize_object(obj)
+    except Exception as e:
+        FreeCAD.Console.PrintError(f"Object '{obj.__class__}' could not be serialized: '{str(e)}'.\n")
+        return False, str(e)
+    try:
+        text = json.dumps(ser)
+        return True, text
+    except Exception as e:
+        FreeCAD.Console.PrintError(f"Object '{obj.__class__}' could not be serialized: '{str(e)}'.\n")
         return False, str(e)
