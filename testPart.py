@@ -361,6 +361,43 @@ async def main():
         )
         format_result(result)
 
+        print("\nInvoking tool 'DumpDocument'...")
+        result = await client.invoke_tool(
+            "DumpDocument", 
+            {
+                "Doc": "TestDoc",
+                "Properties":
+                {}
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-LineSegment'...")
+        result = await client.invoke_tool(
+            "Part-LineSegment", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestLineSegment",
+                "Properties":
+                {
+                    "X1": 10.0,
+                    "Y1": 180.0,
+                    "Z1": 40.0,
+                    "X2": 50.0,
+                    "Y2": 25.0,
+                    "Z2": 325.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Std-ViewFitAll'...")
+        result = await client.invoke_tool(
+            "Std-ViewFitAll", 
+            {}
+        )
+        format_result(result)
+
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         import traceback
