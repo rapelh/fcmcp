@@ -12,8 +12,6 @@ from mcp.client.streamable_http import streamablehttp_client
 from mcp import ClientSession
 
 def format_result(result):
-    print('format_result result', result)
-    # meta=None content=[TextContent(type='text', text='TestDoc created', annotations=None)] isError=False
     content = result.content
     if not result.isError :
         print("Success")
@@ -94,12 +92,28 @@ async def call_tools(session):
             "Draft-Wire-FromVectors", 
             {
                 "Doc": "TestDoc",
-                "Label": "TestWireFromVectors_2",
+                "Label": "TestWireFromVectors",
                 "Properties":
                 {
                     "Vectors": [[15.0, 25.0, 35.0], [15.0, 45.0, 65.0]],
                     "Closed": True,
                     "Face": False
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-Box'...")
+        result = await session.call_tool(
+            "Part-Box", 
+            {
+                "Doc": "TestDoc",
+                "Name": "TestBox",
+                "Properties":
+                {
+                    "Length": 20.0,
+                    "Width": 20.0,
+                    "Height": 20.0,
                 }
             }
         )
