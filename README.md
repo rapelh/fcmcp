@@ -1,7 +1,7 @@
 # fcmcp
 ## MCP for FreeCAD 1.0+
 
-A MCP server as addon for FreeCAD 1.0+ with SSE transport, based on https://github.com/modelcontextprotocol/python-sdk.
+A MCP server as addon for FreeCAD 1.0+ with Streamable HTTP transport, based on https://github.com/modelcontextprotocol/python-sdk.
 
 With ideas taken from:
 - https://github.com/neka-nat/freecad-mcp
@@ -20,4 +20,4 @@ In FreeCAD, select the workbench "MCP addon".
 
 Start the MCP server with the button labelled "Start RPC Server"
 
-test?_client.py provide examples of tool invocation.
+test*.py provide examples of tool invocation.
