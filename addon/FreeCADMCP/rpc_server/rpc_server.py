@@ -1,6 +1,8 @@
 import FreeCAD
 import FreeCADGui
 
+from collections.abc import AsyncIterator
+import contextlib
 import queue
 import importlib
 import os
@@ -9,11 +11,13 @@ from dataclasses import dataclass, field
 from typing import Any
 import mcp.types as types
 from mcp.server.lowlevel import Server
-from mcp.server.sse import SseServerTransport
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from starlette.applications import Starlette
-from starlette.responses import Response
-from starlette.routing import Mount, Route
+#from starlette.responses import Response
+from starlette.types import Receive, Scope, Send
+from starlette.routing import Mount
 import uvicorn
+from .event_store import InMemoryEventStore
 
 
 from PySide import QtCore
@@ -159,6 +163,7 @@ def start_rpc_server(host="localhost", port=9875):
     async def call_tool(
         name: str, arguments: dict
     ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+        FreeCAD.Console.PrintMessage(f"In call_tool(name={name}, arguments={arguments})\n")
         if name in tool_names:
             return tool_mods[name].do_it(arguments)
         else:
@@ -166,25 +171,49 @@ def start_rpc_server(host="localhost", port=9875):
 
     @rpc_server_instance.list_tools()
     async def list_tools() -> list[types.Tool]:
+        FreeCAD.Console.PrintMessage("In list_tools()\n")
         return tools_available
 
-    sse = SseServerTransport("/messages/")
+    # Create event store for resumability
+    # The InMemoryEventStore enables resumability support for StreamableHTTP transport.
+    # It stores SSE events with unique IDs, allowing clients to:
+    #   1. Receive event IDs for each SSE message
+    #   2. Resume streams by sending Last-Event-ID in GET requests
+    #   3. Replay missed events after reconnection
+    # Note: This in-memory implementation is for demonstration ONLY.
+    # For production, use a persistent storage solution.
+    event_store = InMemoryEventStore()
 
-    async def handle_sse(request):
-        async with sse.connect_sse(
-            request.scope, request.receive, request._send
-        ) as streams:
-            await rpc_server_instance.run(
-                streams[0], streams[1], rpc_server_instance.create_initialization_options()
-            )
-        return Response()
+    # Create the session manager with our app and event store
+    session_manager = StreamableHTTPSessionManager(
+        app=rpc_server_instance,
+        event_store=event_store,  # Enable resumability
+        json_response=True,
+    )
 
+    # ASGI handler for streamable HTTP connections
+    async def handle_streamable_http(
+        scope: Scope, receive: Receive, send: Send
+    ) -> None:
+        await session_manager.handle_request(scope, receive, send)
+
+    @contextlib.asynccontextmanager
+    async def lifespan(app: Starlette) -> AsyncIterator[None]:
+        """Context manager for managing session manager lifecycle."""
+        async with session_manager.run():
+            FreeCAD.Console.PrintMessage("Application started with StreamableHTTP session manager!\n")
+            try:
+                yield
+            finally:
+                FreeCAD.Console.PrintMessage("Application shutting down...")
+
+    # Create an ASGI application using the transport
     starlette_app = Starlette(
         debug=True,
         routes=[
-            Route("/sse", endpoint=handle_sse, methods=["GET"]),
-            Mount("/messages/", app=sse.handle_post_message),
+            Mount("/mcp", app=handle_streamable_http),
         ],
+        lifespan=lifespan,
     )
 
     def server_loop():
@@ -196,7 +225,7 @@ def start_rpc_server(host="localhost", port=9875):
     
     QtCore.QTimer.singleShot(500, process_gui_tasks)
 
-    return f"RPC Server started at {host}:{port}."
+    return f"RPC Server (streamable http) started at {host}:{port}."
 
 
 def stop_rpc_server():
@@ -204,7 +233,7 @@ def stop_rpc_server():
 
     if rpc_server_instance:
         rpc_server_thread.join()
-        sse_server_instance = None
+        rpc_server_instance = None
         rpc_server_thread = None
         FreeCAD.Console.PrintMessage("RPC Server stopped.\n")
         return "RPC Server stopped."
