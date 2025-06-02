@@ -20,23 +20,23 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Radius1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the circular path of the torus. Default 10mm."
                             }, 
                             "Radius2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the circular profile of the torus. Default 2mm."
                             }, 
                             "Angle1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Start angle of the circular profile. Valid range: -180° <= value <= 180°. Default -180°."
                             }, 
                             "Angle2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "End angle of the circular profile. Valid range: -180° <= value <= 180°. Default -180°."
                             }, 
                             "Angle3": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Angle of the circular path of the torus. Valid range: 0° < value <= 360°. Default 360°."
                             }, 
                         },

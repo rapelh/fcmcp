@@ -20,43 +20,43 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Xmin": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Lowest X coordinate of the front face of the wedge. Default 0mm."
                             }, 
                             "Ymin": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the front face of the wedge. Default 0mm."
                             }, 
                             "Zmin": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Lowest Z coordinate of the front face of the wedge. Default 0mm."
                             }, 
                             "X2min": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Lowest X coordinate of the rear face of the wedge. Default 2mm."
                             }, 
                             "Z2min": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Lowest Z coordinate of the rear face of the wedge. Default 2mm."
                             }, 
                             "Xmax": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Highest X coordinate of the front face of the wedge. Default 10mm."
                             }, 
                             "Ymax": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the rear face of the wedge. Default 10mm."
                             }, 
                             "Zmax": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Highest Z coordinate of the front face of the wedge. Default 10mm."
                             }, 
                             "X2max": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Highest X coordinate of the rear face of the wedge. Default 8mm."
                             }, 
                             "Z2max": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Highest Z coordinate of the rear face of the wedge. Default 8mm."
                             }, 
                         },

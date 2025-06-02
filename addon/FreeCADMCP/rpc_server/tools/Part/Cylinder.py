@@ -20,23 +20,23 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Radius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the cylinder to create",
                             },
                             "Height": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Height of the cylinder to create",
                             },
                             "Angle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Circular arc of the cylinder to create. Valid range: 0° < value <= 360°. Default 360°.",
                             },
                             "FirstAngle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "The angle between the extrusion direction of the cylinder and the positive Z axis, measured around the Y axis. Valid range: 0° <= value < 90°. Default 0°.",
                             },
                             "SecondAngle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "The angle between the extrusion direction of the cylinder and the positive Z axis, measured around the X axis. Valid range: 0° <= value < 90°. Default 0°.",
                             }
                         },

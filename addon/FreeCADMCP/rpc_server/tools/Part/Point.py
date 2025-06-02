@@ -20,15 +20,15 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "X": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "X coordinate of the point. Default 0mm."
                             }, 
                             "Y": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the point. Default 0mm."
                             }, 
                             "Z": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Z coordinate of the point. Default 0mm."
                             }, 
                         },

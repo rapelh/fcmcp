@@ -20,23 +20,23 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Polygon": {
-                                "type": "int",
+                                "type": "integer",
                                 "description": "Number of sides of the polygon. Default 6."
                             }, 
                             "Circumradius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the circle that circumscribes the polygon, the distance from the center of the polygon to one of its vertices. Default 2mm."
                             }, 
                             "Height": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Height of the prism. Default 10mm."
                             }, 
                             "FirstAngle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Angle between the extrusion direction of the prism and the positive Z axis, measured around the Y axis. Positive towards the positive X axis. Valid range: 0° <= value < 90°. Default 0°."
                             }, 
                             "SecondAngle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Angle between the extrusion direction of the prism and its positive Z axis, measured around its X axis. Positive towards its positive Y axis. Valid range: 0° <= value < 90°. Default 0°."
                             }, 
                         },

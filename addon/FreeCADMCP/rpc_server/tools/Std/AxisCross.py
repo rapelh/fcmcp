@@ -10,7 +10,7 @@ tool_type = types.Tool(
                     "required": [],
                     "properties": {
                         "Activate": {
-                            "type": "bool",
+                            "type": "boolean",
                             "description": "Activate or deactivate",
                         }
                     }

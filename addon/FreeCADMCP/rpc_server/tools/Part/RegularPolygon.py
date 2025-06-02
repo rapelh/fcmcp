@@ -20,11 +20,11 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Polygon": {
-                                "type": "int",
+                                "type": "integer",
                                 "description": "Number of sides of the polygon. Default 6."
                             }, 
                             "Circumradius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the circle that circumscribes the polygon, the distance from the center of the polygon to one of its vertices. Default 2mm."
                             }, 
                         },

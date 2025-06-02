@@ -1,7 +1,9 @@
 import mcp.types as types
 import FreeCAD
 import Draft
+import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
                 name="Draft-Line-FromVectors",
@@ -20,27 +22,27 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "X1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "X coordinate of the first vector. Default 0mm."
                             }, 
                             "Y1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the first vector. Default 0mm."
                             }, 
                             "Z1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Z coordinate of the first vector. Default 0mm."
                             }, 
                             "X2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "X coordinate of the second vector. Default 10mm."
                             }, 
                             "Y2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the second vector. Default 10mm."
                             }, 
                             "Z2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Z coordinate of the second vector. Default 10mm."
                             }, 
                         },
@@ -66,4 +68,12 @@ def _line_from_vectors_gui(doc_name, label, obj):
     line = Draft.make_line(p1, p2)
     line.Label = label
     doc.recompute()
-    return True, line.Label
+    try:
+        ser = serialize_object(line)
+    except Exception as e:
+        return False, str(e)
+    try:
+        text = json.dumps(ser)
+        return True, text
+    except Exception as e:
+        return False, str(e)

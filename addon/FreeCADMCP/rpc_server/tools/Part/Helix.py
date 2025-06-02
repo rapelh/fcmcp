@@ -20,23 +20,23 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Pitch": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Distance between two consecutive turns of the helix measured along its Z axis. Default 1mm."
                             }, 
                             "Height": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Height of the helix. Default 2mm."
                             }, 
                             "Radius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Start radius of the helix. The helix has a constant radius if Angle is 0°."
                             }, 
                             "SegmentLength": {
-                                "type": "int",
+                                "type": "integer",
                                 "description": "Number of turns per helix subdivision. The default is 1, meaning each full turn of the helix is a separate segment. Use 0 to suppress subdivision."
                             }, 
                             "Angle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Angle that defines the outer shape of the helix. Valid range: -90° < value < 90°. Default 0°. If it is 0° the helix is cylindrical, else it is conical."
                             }, 
                         },

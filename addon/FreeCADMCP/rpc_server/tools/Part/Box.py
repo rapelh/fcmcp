@@ -20,15 +20,15 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Length": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Dimension in the X direction",
                             },
                             "Width": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Dimension in the Y direction",
                             },
                             "Height": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Dimension in the Z direction",
                             }
                         }

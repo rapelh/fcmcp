@@ -1,7 +1,9 @@
 import mcp.types as types
 import FreeCAD
 import Draft
+import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
                 name="Draft-Line-FromLineSegment",
@@ -24,7 +26,7 @@ tool_type = types.Tool(
                                 "description": "Sketcher object name"
                             }, 
                             "GeometryIndex": {
-                                "type": "int",
+                                "type": "integer",
                                 "description": "Index of LineSegment in Sketcher object geometry"
                             }, 
                         },
@@ -50,4 +52,12 @@ def _line_from_sketch_line_segment_gui(doc_name, label, obj):
     line = Draft.make_line(ls)
     line.Label = label
     doc.recompute()
-    return True, line.Label
+    try:
+        ser = serialize_object(line)
+    except Exception as e:
+        return False, str(e)
+    try:
+        text = json.dumps(ser)
+        return True, text
+    except Exception as e:
+        return False, str(e)

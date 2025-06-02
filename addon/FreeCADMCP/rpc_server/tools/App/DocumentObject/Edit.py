@@ -20,24 +20,25 @@ tool_type = types.Tool(
                             "description": "Name of object to modify",
                         },
                         "Length": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Length of object to set",
                         },
                         "Width": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Width of object to set",
                         },
                         "Height": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Height of object to set",
                         },
                         "Radius": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Radius of object to set",
                         }
                     },
                 },
             )
+
 def do_it(args):
     doc_name = args.get('Doc')
     obj_name = args.get('Name')

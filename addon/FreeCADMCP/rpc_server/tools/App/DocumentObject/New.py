@@ -24,19 +24,19 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Length": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Length of object to create",
                         },
                         "Width": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Width of object to create",
                         },
                         "Height": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Height of object to create",
                         },
                         "Radius": {
-                            "type": "float",
+                            "type": "number",
                             "description": "Radius of object to create",
                         }
                     },

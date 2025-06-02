@@ -20,19 +20,19 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Radius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the sphere to create",
                             },
                             "Angle1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "The start angle of the circular arc profile of the sphere. Valid range: -90° <= value <= 90°. Default -90°.",
                             },
                             "Angle2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "The end angle of the circular arc profile of the sphere. Valid range: -90° <= value <= 90°. Default 90°.",
                             },
                             "Angle3": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "The total angle of revolution of the sphere. Valid range: 0° < value <= 360°. Default 360°.",
                             }
                         }

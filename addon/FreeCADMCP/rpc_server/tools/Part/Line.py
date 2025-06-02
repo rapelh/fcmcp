@@ -20,27 +20,27 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "X1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "X coordinate of the start point. Default 0mm."
                             }, 
                             "Y1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the start point. Default 0mm."
                             }, 
                             "Z1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Z coordinate of the start point. Default 0mm."
                             }, 
                             "X2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "X coordinate of the start point. Default 10mm."
                             }, 
                             "Y2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y coordinate of the start point. Default 10mm."
                             }, 
                             "Z2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Z coordinate of the start point. Default 10mm."
                             }, 
                         },

@@ -20,19 +20,19 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Growth": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Distance between two consecutive turns of the spiral. Default 1mm."
                             }, 
                             "Rotations": {
-                                "type": "int",
+                                "type": "integer",
                                 "description": "Number of rotations, or turns, of the spiral. The default is 2."
                             }, 
                             "Radius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Start radius of the spiral, the distance between its center and its start point. Can be 0mm. Default 1mm."
                             }, 
                             "SegmentLength": {
-                                "type": "int",
+                                "type": "integer",
                                 "description": "Number of turns per spiral subdivision. The default is 1, meaning each full turn of the spiral is a separate segment. Use 0 to suppress subdivision."
                             }, 
                         },

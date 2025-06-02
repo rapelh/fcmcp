@@ -20,15 +20,15 @@ tool_type = types.Tool(
                         },
                         "Position": {
                             "X": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "X for Position",
                             },
                             "Y": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Y for Position",
                             },
                             "Z": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Z for Position",
                             },
                         },
@@ -39,46 +39,46 @@ tool_type = types.Tool(
                             },
                             "Center": {
                                 "X": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "X for Center",
                                 },
                                 "Y": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "Y for Center",
                                 },
                                 "Z": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "Z for Center",
                                 },
                             },
                             "Angle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Angle for AAP",
                             },
                             "Axis": {
                                 "X": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "X for Axis",
                                 },
                                 "Y": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "Y for Axis",
                                 },
                                 "Z": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "Z for Axis",
                                 },
                             },
                             "Yaw": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Yaw for PYPR",
                             },
                             "Pitch": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Pitch for PYPR",
                             },
                             "Roll": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Roll for PYPR",
                             },
                         },

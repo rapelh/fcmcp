@@ -22,15 +22,15 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Height": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Height of the tube. The default is 10mm."
                             }, 
                             "InnerRadius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Inner radius of the tube. Must be smaller than OuterRadius. Can be 0. Default 2mm."
                             }, 
                             "OuterRadius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Outer radius of the tube. Must be larger than InnerRadius. Default 5mm."
                             }, 
                         },

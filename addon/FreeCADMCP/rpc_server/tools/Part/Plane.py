@@ -20,11 +20,11 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Length": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Length of the plane in the X direction. Default 10mm."
                             }, 
                             "Width": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Width of the plane in the Y direction. Default 10mm."
                             }, 
                         },

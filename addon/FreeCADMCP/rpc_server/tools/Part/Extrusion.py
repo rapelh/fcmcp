@@ -30,15 +30,15 @@ tool_type = types.Tool(
                             }, 
                             "Dir": {
                                 "X": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "X component of direction"
                                 },
                                 "Y": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "Y component of direction"
                                 },
                                 "Z": {
-                                    "type": "float",
+                                    "type": "number",
                                     "description": "Z component of direction"
                                 }
                             }, 
@@ -47,31 +47,31 @@ tool_type = types.Tool(
                                 "description": "Link to object for Normal or Edge DirMode"
                             }, 
                             "LengthFwd": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Length to extrude forward"
                             }, 
                             "LengthRev": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Length to extrude reverse"
                             }, 
                             "Solid": {
-                                "type": "bool",
+                                "type": "boolean",
                                 "description": "Create solid"
                             }, 
                             "Reversed": {
-                                "type": "bool",
+                                "type": "boolean",
                                 "description": "Direction reversed"
                             }, 
                             "Symmetric": {
-                                "type": "bool",
+                                "type": "boolean",
                                 "description": "Extrude symmetric"
                             }, 
                             "TaperAngle": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Taper angle forward"
                             }, 
                             "TaperAngleRev": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Taper angle reverse"
                             }, 
                         },

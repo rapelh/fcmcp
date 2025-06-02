@@ -1,7 +1,9 @@
 import mcp.types as types
 import FreeCAD
 import Draft
+import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
                 name="Draft-Wire-FromVectors",
@@ -20,15 +22,15 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Vectors": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "List of vectors."
                             },
                             "Closed": {
-                                "type": "bool",
+                                "type": "boolean",
                                 "description": "Close the wire."
                             },
                             "Face": {
-                                "type": "bool",
+                                "type": "boolean",
                                 "description": "Try to create a face from a closed wire."
                             } 
                         },
@@ -62,4 +64,12 @@ def _wire_from_points_gui(doc_name, label, obj):
     wire = Draft.make_wire(vectorlist, closed=closed, face=face)
     wire.Label = label
     doc.recompute()
-    return True, wire.Label
+    try:
+        ser = serialize_object(line)
+    except Exception as e:
+        return False, str(e)
+    try:
+        text = json.dumps(ser)
+        return True, text
+    except Exception as e:
+        return False, str(e)

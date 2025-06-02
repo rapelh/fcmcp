@@ -20,19 +20,19 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Radius1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the bottom face of the cone. Can be 0mm if Radius2 > 0mm. Default 2mm."
                             },
                             "Radius2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the top face of the cone. Can be 0mm if Radius1 > 0mm. Default 4mm."
                             },
                             "Height": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Height of the cone. Default 10mm."
                             },
                             "Angle": {
-                                "type": "flot",
+                                "type": "number",
                                 "description": "Angle of the circular arc that defines the top and bottom face of the cone. Valid range: 0° < value <= 360°. Default 360°."
                             },
                         }

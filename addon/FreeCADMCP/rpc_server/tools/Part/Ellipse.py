@@ -20,19 +20,19 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "MajorRadius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Major radius of the ellipse or elliptical arc. Default 4mm."
                             }, 
                             "MinorRadius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Minor radius of the ellipse or elliptical arc. Default 2mm."
                             }, 
                             "Angle1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Start angle of the elliptical arc. Valid range: 0° < value <= 360°. Default 0°."
                             }, 
                             "Angle2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "End angle of the elliptical arc. Valid range: 0° < value <= 360°. Default 360°."
                             }, 
                         },

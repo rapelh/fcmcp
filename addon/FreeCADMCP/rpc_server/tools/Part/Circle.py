@@ -20,15 +20,15 @@ tool_type = types.Tool(
                         },
                         "Properties": {
                             "Radius": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Radius of the circle or circular arc. Default 2mm."
                             }, 
                             "Angle1": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "Start angle of the circular arc. Valid range: 0° < value <= 360°. Default 0°."
                             }, 
                             "Angle2": {
-                                "type": "float",
+                                "type": "number",
                                 "description": "End angle of the circular arc. Valid range: 0° < value <= 360°. Default 360°."
                             }, 
                         },
