@@ -93,7 +93,6 @@ def serialize_object(obj):
         }
 
         for prop in obj.PropertiesList:
-            FreeCAD.Console.PrintMessage(f"Class '{obj.__class__}' Property '{prop}'.\n")
             try:
                 if prop == 'Base':
                     result["Properties"][prop] = serialize_object(getattr(obj, prop))
