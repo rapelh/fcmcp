@@ -1,37 +1,19 @@
-"""
-MCP SSE Client Usage Example
-
-This script demonstrates how to use the MCPClient to interact with an MCP endpoint,
-list available tools, and invoke a tool with parameters.
-"""
-
-import asyncio
-import json
 import sys
-from client.mcp_sse_client.client import MCPClient
+from testClients import format_result
 
-def format_result(result):
-    res_dict = json.loads(result.content)
-    if result.error_code == 0:
-        print("Success")
-        if res_dict["type"] == "text":
-            print(res_dict["text"])
-        elif res_dict["type"] == "image":
-            print(res_dict["data"], res_dict["mimeType"])
-    else:
-        print("Failure", result.error_code)
-        if res_dict["type"] == "text":
-            print(res_dict["text"])
-
-async def main():
-    print("Starting MCPClient ...")
+async def call_tools(session):
     try:
-        # Initialize the client
-        print("Initializing client...")
-        client = MCPClient("http://localhost:9875/sse")
+        # List available tools
+        print("Listing available tools...")
+        messages = await session.list_tools()
+        print("Available tools:")
+        for msg in messages:
+            if msg[0] == 'tools':
+                for tool in msg[1]:
+                    print(f"- {tool}")
 
         print("\nInvoking tool 'Std-New'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Std-New", 
             {
                 "Name": "TestDoc"
@@ -40,7 +22,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Box'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Box", 
             {
                 "Doc": "TestDoc",
@@ -56,7 +38,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Circle'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Circle", 
             {
                 "Doc": "TestDoc",
@@ -72,7 +54,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Cone'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Cone", 
             {
                 "Doc": "TestDoc",
@@ -89,7 +71,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Cylinder'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Cylinder", 
             {
                 "Doc": "TestDoc",
@@ -107,7 +89,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Ellipse'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Ellipse", 
             {
                 "Doc": "TestDoc",
@@ -124,7 +106,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Ellipsoid'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Ellipsoid", 
             {
                 "Doc": "TestDoc",
@@ -143,7 +125,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Helix'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Helix", 
             {
                 "Doc": "TestDoc",
@@ -161,7 +143,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Line'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Line", 
             {
                 "Doc": "TestDoc",
@@ -180,7 +162,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Plane'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Plane", 
             {
                 "Doc": "TestDoc",
@@ -195,7 +177,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Point'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Point", 
             {
                 "Doc": "TestDoc",
@@ -211,7 +193,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Prism'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Prism", 
             {
                 "Doc": "TestDoc",
@@ -228,7 +210,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-RegularPolygon'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-RegularPolygon", 
             {
                 "Doc": "TestDoc",
@@ -243,7 +225,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Sphere'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Sphere", 
             {
                 "Doc": "TestDoc",
@@ -260,7 +242,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Spiral'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Spiral", 
             {
                 "Doc": "TestDoc",
@@ -277,7 +259,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Torus'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Torus", 
             {
                 "Doc": "TestDoc",
@@ -295,7 +277,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Tube'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Tube", 
             {
                 "Doc": "TestDoc",
@@ -311,7 +293,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Wedge'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Wedge", 
             {
                 "Doc": "TestDoc",
@@ -334,7 +316,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-Extrusion'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-Extrusion", 
             {
                 "Doc": "TestDoc",
@@ -362,7 +344,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'DumpDocument'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "DumpDocument", 
             {
                 "Doc": "TestDoc",
@@ -373,7 +355,7 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Part-LineSegment'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Part-LineSegment", 
             {
                 "Doc": "TestDoc",
@@ -392,17 +374,16 @@ async def main():
         format_result(result)
 
         print("\nInvoking tool 'Std-ViewFitAll'...")
-        result = await client.invoke_tool(
+        result = await session.call_tool(
             "Std-ViewFitAll", 
             {}
         )
         format_result(result)
 
+
+
+
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         import traceback
         traceback.print_exc()
-
-if __name__ == "__main__":
-    asyncio.run(main())
-    print("Script completed.")
