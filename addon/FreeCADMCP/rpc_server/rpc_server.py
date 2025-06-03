@@ -232,13 +232,14 @@ def stop_rpc_server():
     global rpc_server_instance, rpc_server_thread
 
     if rpc_server_instance:
-        rpc_server_thread.join()
+        rpc_server_thread.join(1)
         rpc_server_instance = None
         rpc_server_thread = None
         FreeCAD.Console.PrintMessage("RPC Server stopped.\n")
         return "RPC Server stopped."
 
     return "RPC Server was not running."
+
 
 
 class StartRPCServerCommand:

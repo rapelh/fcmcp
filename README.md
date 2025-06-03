@@ -12,12 +12,27 @@ Additional tools may be added to addon/FreeCADMCP/sse_server/tools following the
 
 ### Installation
 
-On Ubuntu, copy the folder addon/FreeCADMCP to ~/snap/freecad/common/Mod/ and restart FreeCAD.
+- Locate your FreeCAD local personal home directory:
+-- For a Snap installation, ~/snap/freecad/ 
+-- For an AppImage execution: ~/.local/share/FreeCAD/
+- Make sure a folder ./Mod/ exists below
+
+On Ubuntu, copy the folder addon/FreeCADMCP to that ./Mod/ folder and restart FreeCAD.
+
+In FreeCAD, select the workbench "MCP addon" and setup the MCP server with the command button labeled "Init RPC Server".
+
+After restarting FreeCAD again and again selecting the "MCP addon" workbench, there will be 3 command buttons available: 
+- "Start RPC Server"
+- "Stop RPC Server"
+- "Init RPC Server"
+
 
 ### Usage
 
 In FreeCAD, select the workbench "MCP addon". 
 
-Start the MCP server with the button labelled "Start RPC Server"
+Start the MCP server with the button labeled "Start RPC Server"
 
-test*.py provide examples of tool invocation.
+The test*.py scripts provide examples of tool invocation.
+
+Under ./agents/ several examples of FreeCAD-MCP agents have been collected.
