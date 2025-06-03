@@ -15,7 +15,7 @@ tool_type = types.Tool(
                     "properties": {
                         "ViewName": {
                             "type": "string",
-                            "description": "Viev name",
+                            "description": "View name",
                         }
                     },
                 },

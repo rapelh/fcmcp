@@ -32,10 +32,10 @@ def do_it(args):
     else:
         return [types.TextContent(type="text", text=res)]
 
-def _set_stereo_type():
+def _set_stereo_type(stereo_type):
     try:
         view = FreeCADGui.ActiveDocument.ActiveView
-        view.setStereoType("Anaglyph")
+        view.setStereoType(stereo_type)
         return True
     except Exception as e:
         return str(e)

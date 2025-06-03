@@ -1,7 +1,8 @@
 import mcp.types as types
 import FreeCAD
-import math
+import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue
+from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
                 name="Std-Placement",
@@ -97,21 +98,21 @@ def do_it(args):
         angle = rotation.get("Angle", 0)
         axis = rotation.get("Axis", {"X": 0, "Y": 0, "Z": 1})
         rpc_request_queue.put(lambda: _aap_placement_gui(doc_name, obj_name, angle, axis, position, center))
-        res = rpc_response_queue.get()
+        res, text = rpc_response_queue.get()
         if res is True:
-            return [types.TextContent(type="text", text="AAP")]
+            return [types.TextContent(type="text", text=text)]
         else:
-            return [types.TextContent(type="text", text=res)]
+            return [types.TextContent(type="text", text=text)]
     elif mode == "PYPR":
         yaw = rotation.get("Yaw", 0)
         pitch = rotation.get("Pitch", 0)
         roll = rotation.get("Roll", 0)
         rpc_request_queue.put(lambda: _pypr_placement_gui(doc_name, obj_name, position, yaw, pitch, roll, center))
-        res = rpc_response_queue.get()
+        res, text = rpc_response_queue.get()
         if res is True:
-            return [types.TextContent(type="text", text="PYPR")]
+            return [types.TextContent(type="text", text=text)]
         else:
-            return [types.TextContent(type="text", text=res)]
+            return [types.TextContent(type="text", text=text)]
     else:
             return [types.TextContent(type="text", text=f"Unknown rotation mode {mode}")]
 
@@ -130,9 +131,9 @@ def _aap_placement_gui(doc_name: str, obj_name: str, angle: float, axis: dict[st
         ctr = FreeCAD.Vector(center["X"], center["Y"], center["Z"])
         plc = FreeCAD.Placement(pos, rot, ctr)
         obj.Placement = plc
-        return True
+        return True, json.dumps(serialize_object(obj))
     except Exception as e:
-        return str(e)
+        return False, str(e)
 
 def _pypr_placement_gui(doc_name: str, obj_name: str, position: dict[str, float], yaw: float, pitch: float, roll: float, center: dict[str, float]):
     doc = FreeCAD.getDocument(doc_name)
@@ -149,6 +150,6 @@ def _pypr_placement_gui(doc_name: str, obj_name: str, position: dict[str, float]
         ctr = FreeCAD.Vector(center["X"], center["Y"], center["Z"])
         plc = FreeCAD.Placement(pos, rot, ctr)
         obj.Placement = plc
-        return True
+        return True, json.dumps(serialize_object(obj))
     except Exception as e:
-        return str(e)
+        return False, str(e)
