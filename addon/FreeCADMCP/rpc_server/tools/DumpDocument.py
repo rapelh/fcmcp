@@ -9,9 +9,9 @@ tool_type =  types.Tool(
                 description="Create JSON dump of document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc"],
+                    "required": ["DocName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document to dump",
                         }
@@ -20,7 +20,7 @@ tool_type =  types.Tool(
             )
 
 def do_it(args):
-    doc_name = args.get('Doc')
+    doc_name = args.get('DocName')
     rpc_request_queue.put(lambda: _dump_document_gui(doc_name))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]

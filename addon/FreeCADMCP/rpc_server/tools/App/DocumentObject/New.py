@@ -9,36 +9,38 @@ tool_type = types.Tool(
                 description="Create a named object in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Type", "Name"],
+                    "required": ["DocName", "ObjType", "ObjName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "Type": {
+                        "ObjType": {
                             "type": "string",
                             "description": "Type of object to create",
                         }, 
-                        "Name": {
+                        "ObjName": {
                             "type": "string",
                             "description": "Name of object to create",
                         },
-                        "Length": {
-                            "type": "number",
-                            "description": "Length of object to create",
+                        "Properties": {
+                            "Length": {
+                                "type": "number",
+                                "description": "Length of object to create",
+                            },
+                            "Width": {
+                                "type": "number",
+                                "description": "Width of object to create",
+                            },
+                            "Height": {
+                                "type": "number",
+                                "description": "Height of object to create",
+                            },
+                            "Radius": {
+                                "type": "number",
+                                "description": "Radius of object to create",
+                            },
                         },
-                        "Width": {
-                            "type": "number",
-                            "description": "Width of object to create",
-                        },
-                        "Height": {
-                            "type": "number",
-                            "description": "Height of object to create",
-                        },
-                        "Radius": {
-                            "type": "number",
-                            "description": "Radius of object to create",
-                        }
                     },
                 },
             )

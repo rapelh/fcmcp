@@ -9,39 +9,41 @@ tool_type = types.Tool(
                 description="Modify properties of a named object in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Name"],
+                    "required": ["DocName", "ObjName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document the object belongs to",
                         },
-                        "Name": {
+                        "ObjName": {
                             "type": "string",
                             "description": "Name of object to modify",
                         },
-                        "Length": {
-                            "type": "number",
-                            "description": "Length of object to set",
-                        },
-                        "Width": {
-                            "type": "number",
-                            "description": "Width of object to set",
-                        },
-                        "Height": {
-                            "type": "number",
-                            "description": "Height of object to set",
-                        },
-                        "Radius": {
-                            "type": "number",
-                            "description": "Radius of object to set",
+                        "Properties": {
+                            "Length": {
+                                "type": "number",
+                                "description": "Length of object to set",
+                            },
+                            "Width": {
+                                "type": "number",
+                                "description": "Width of object to set",
+                            },
+                            "Height": {
+                                "type": "number",
+                                "description": "Height of object to set",
+                            },
+                            "Radius": {
+                                "type": "number",
+                                "description": "Radius of object to set",
+                            }
                         }
                     },
                 },
             )
 
 def do_it(args):
-    doc_name = args.get('Doc')
-    obj_name = args.get('Name')
+    doc_name = args.get('DocName')
+    obj_name = args.get('ObjName')
     obj = Object(
         name=obj_name,
         properties=args.get("Properties", {}),

@@ -7,9 +7,9 @@ tool_type = types.Tool(
                 description="Set a named document as the active one",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc"],
+                    "required": ["DocName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document to make active",
                         }
@@ -19,7 +19,7 @@ tool_type = types.Tool(
 
 
 def do_it(args):
-    doc_name = args.get('Doc')
+    doc_name = args.get('DocName')
     rpc_request_queue.put(lambda: _set_active_document_gui(doc_name))
     res = rpc_response_queue.get()
     if res is True:

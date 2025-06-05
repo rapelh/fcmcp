@@ -9,13 +9,13 @@ tool_type = types.Tool(
                 description="Set position  a and rotation ofnamed object in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Name", "Mode"],
+                    "required": ["DocName", "ObjName", "Mode"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "Name": {
+                        "ObjName": {
                             "type": "string",
                             "description": "Name of object to create",
                         },
@@ -34,10 +34,6 @@ tool_type = types.Tool(
                             },
                         },
                         "Rotation": {
-                            "Mode": {
-                                "type": "string",
-                                "description": "AAP (angle, axis, position) or PYPR (position, yaw, pitch, roll)",
-                            },
                             "Center": {
                                 "X": {
                                     "type": "number",
@@ -88,22 +84,12 @@ tool_type = types.Tool(
             )
 
 def do_it(args):
-    doc_name = args.get("Doc")
-    obj_name = args.get("Name")
+    doc_name = args.get("DocName")
+    obj_name = args.get("ObjName")
     position = args.get("Position", {"X": 0, "Y": 0, "Z": 0})
     rotation = args.get("Rotation")
-    mode = rotation.get("Mode")
     center = rotation.get("Center", {"X": 0, "Y": 0, "Z": 0})
-    if mode == "AAP":
-        angle = rotation.get("Angle", 0)
-        axis = rotation.get("Axis", {"X": 0, "Y": 0, "Z": 1})
-        rpc_request_queue.put(lambda: _aap_placement_gui(doc_name, obj_name, angle, axis, position, center))
-        res, text = rpc_response_queue.get()
-        if res is True:
-            return [types.TextContent(type="text", text=text)]
-        else:
-            return [types.TextContent(type="text", text=text)]
-    elif mode == "PYPR":
+    if "Yaw" in rotation and "Pitch" in rotation and "Roll" in rotation:
         yaw = rotation.get("Yaw", 0)
         pitch = rotation.get("Pitch", 0)
         roll = rotation.get("Roll", 0)
@@ -114,7 +100,14 @@ def do_it(args):
         else:
             return [types.TextContent(type="text", text=text)]
     else:
-            return [types.TextContent(type="text", text=f"Unknown rotation mode {mode}")]
+        angle = rotation.get("Angle", 0)
+        axis = rotation.get("Axis", {"X": 0, "Y": 0, "Z": 1})
+        rpc_request_queue.put(lambda: _aap_placement_gui(doc_name, obj_name, angle, axis, position, center))
+        res, text = rpc_response_queue.get()
+        if res is True:
+            return [types.TextContent(type="text", text=text)]
+        else:
+            return [types.TextContent(type="text", text=text)]
 
 def _aap_placement_gui(doc_name: str, obj_name: str, angle: float, axis: dict[str, float], position: dict[str, float], center: dict[str, float]):
     doc = FreeCAD.getDocument(doc_name)

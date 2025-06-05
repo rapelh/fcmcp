@@ -8,13 +8,13 @@ tool_type = types.Tool(
                 description="Create a named circle object in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Name"],
+                    "required": ["DocName", "ObjName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "Name": {
+                        "ObjName": {
                             "type": "string",
                             "description": "Name of object to create",
                         },
@@ -37,9 +37,9 @@ tool_type = types.Tool(
             )
 
 def do_it(args):
-    doc_name = args.get("Doc")
+    doc_name = args.get("DocName")
     obj = Object(
-        name=args.get("Name", "Circle"),
+        name=args.get("ObjName", "Circle"),
         type="Part::Circle",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),

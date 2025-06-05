@@ -7,13 +7,13 @@ tool_type = types.Tool(
                 description="Delete a named object in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Name"],
+                    "required": ["DocName", "ObjName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document the object belongs to",
                         },
-                        "Name": {
+                        "ObjName": {
                             "type": "string",
                             "description": "Name of object to modify",
                         }
@@ -21,10 +21,9 @@ tool_type = types.Tool(
                 },
             )
 
-# def delete_object(doc_name: str, obj_name: str):
 def do_it(args):
-    doc_name = args.get('Doc')
-    obj_name = args.get('Name')
+    doc_name = args.get('DocName')
+    obj_name = args.get('ObjName')
     rpc_request_queue.put(lambda: _delete_object_gui(doc_name, obj_name))
     res, text = rpc_response_queue.get()
     if res is True:

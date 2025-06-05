@@ -10,13 +10,13 @@ tool_type = types.Tool(
                 description="Create a labeled line object from vectors in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc"],
+                    "required": ["DocName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "Label": {
+                        "ObjLabel": {
                             "type": "string",
                             "description": "Label for object to create",
                         },
@@ -51,8 +51,8 @@ tool_type = types.Tool(
             )
 
 def do_it(args):
-    doc_name = args.get("Doc")
-    label = args.get("Label")
+    doc_name = args.get("DocName")
+    label = args.get("ObjLabel")
     obj = Object(
         name=label,
         properties=args.get("Properties", {}),

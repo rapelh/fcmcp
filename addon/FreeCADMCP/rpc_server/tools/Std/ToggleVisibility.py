@@ -7,13 +7,13 @@ tool_type = types.Tool(
                 description="Toggle visibility of named object in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Name"],
+                    "required": ["DocName", "ObjName"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "Name": {
+                        "ObjName": {
                             "type": "string",
                             "description": "Name of object to create",
                         },
@@ -22,8 +22,8 @@ tool_type = types.Tool(
             )
 
 def do_it(args):
-    doc_name = args.get("Doc")
-    obj_name = args.get("Name")
+    doc_name = args.get("DocName")
+    obj_name = args.get("Obj")
     rpc_request_queue.put(lambda: _toggle_visibility_gui(doc_name, obj_name))
     res = rpc_response_queue.get()
     if res is True:

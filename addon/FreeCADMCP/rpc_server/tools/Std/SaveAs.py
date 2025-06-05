@@ -7,9 +7,9 @@ tool_type = types.Tool(
                 description="Save a document to a file",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc", "Path"],
+                    "required": ["DocName", "Path"],
                     "properties": {
-                        "Doc": {
+                        "DocName": {
                             "type": "string",
                             "description": "Document name",
                         },
@@ -23,7 +23,7 @@ tool_type = types.Tool(
 
 
 def do_it(args):
-    doc_name = args.get('Doc')
+    doc_name = args.get('DocName')
     path = args.get('Path')
     rpc_request_queue.put(lambda: _saveas_document_gui(doc_name, path))
     res = rpc_response_queue.get()

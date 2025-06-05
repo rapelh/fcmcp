@@ -7,7 +7,7 @@ tool_type = types.Tool(
                 description="Create a named document and returns its name",
                 inputSchema={
                     "type": "object",
-                    "required": ["Name"],
+                    "required": ["DocName"],
                     "properties": {
                         "Name": {
                             "type": "string",
@@ -19,8 +19,8 @@ tool_type = types.Tool(
 
 
 def do_it(args):
-    name = args.get('Name')
-    rpc_request_queue.put(lambda: _create_document_gui(name))
+    doc_name = args.get('DocName')
+    rpc_request_queue.put(lambda: _create_document_gui(doc_name))
     res, text = rpc_response_queue.get()
     if res is True:
         return [types.TextContent(type="text", text=text)]
