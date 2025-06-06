@@ -40,19 +40,19 @@ tool_type = types.Tool(
 
 def do_it(args):
     doc_name = args.get("DocName")
-    obj = Object(
+    probj = Object(
         name=args.get("ObjName", "Tube"),
         type="Part::Tube",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _create_tube_gui(doc_name, obj))
+    rpc_request_queue.put(lambda: _create_tube_gui(doc_name, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _create_tube_gui(doc_name, obj):
+def _create_tube_gui(doc_name, probj):
     doc = FreeCAD.getDocument(doc_name)
-    tube = Shapes.addTube(doc, obj.name)
-    set_object_property(doc, tube, obj.properties)
+    tube = Shapes.addTube(doc, probj.name)
+    set_object_property(doc, tube, probj.properties)
     doc.recompute()
     return True, json.dumps(serialize_object(tube))

@@ -6,8 +6,8 @@ from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
 from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
-                name="Draft-Line-FromLineSegment",
-                description="Create a labeled line object from a sketcher geometry line segment in a named document",
+                name="Draft-Name-FromTwoEdges",
+                description="Create a labeled line object from vectors in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["DocName"],
@@ -16,18 +16,22 @@ tool_type = types.Tool(
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "ObjLabel": {
+                        "ObjName": {
                             "type": "string",
-                            "description": "Label for object to create",
+                            "description": "Name of object to get edges from",
                         },
                         "Properties": {
-                            "SketchName": {
-                                "type": "string",
-                                "description": "Sketcher object name"
-                            }, 
-                            "GeometryIndex": {
+                            "EdgeIndex1": {
                                 "type": "integer",
-                                "description": "Index of LineSegment in Sketcher object geometry"
+                                "description": "Index of first edge in Shape.Edges of named object"
+                            }, 
+                            "EdgeIndex2": {
+                                "type": "integer",
+                                "description": "Index of first edge in Shape.Edges of named object"
+                            }, 
+                            "Radius": {
+                                "type": "number",
+                                "description": "Radius of the fillet to create"
                             }, 
                         },
                     },
@@ -36,24 +40,23 @@ tool_type = types.Tool(
 
 def do_it(args):
     doc_name = args.get("DocName")
-    label = args.get("ObjLabel")
+    obj_name = args.get("ObjName")
     probj = Object(
-        name=label,
+        name=obj_name,
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _line_from_sketch_line_segment_gui(doc_name, label, probj))
+    rpc_request_queue.put(lambda: _fillet_from_two_edges_gui(doc_name, obj_name, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _line_from_sketch_line_segment_gui(doc_name, label, probj):
+def _fillet_from_two_edges_gui(doc_name, obj_name, probj):
     doc = FreeCAD.getDocument(doc_name)
-    sketch = doc.getObject(probj.properties["SketchName"])
-    ls = sketch.Geometry[probj.properties["GeometryIndex"]]
-    line = Draft.make_line(ls)
-    line.Label = label
+    e1 = doc.getObject(obj_name).Shape.Edges[probj.properties["EdgeIndex1"]]
+    e2 = doc.getObject(obj_name).Shape.Edges[probj.properties["EdgeIndex2"]]
+    fillet = Draft.make_fillet([e1, e2], radius=probj.properties["Radius"])
     doc.recompute()
     try:
-        ser = serialize_object(line)
+        ser = serialize_object(fillet)
     except Exception as e:
         return False, str(e)
     try:

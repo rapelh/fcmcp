@@ -42,12 +42,12 @@ tool_type = types.Tool(
 
 def do_it(args):
     doc_name = args.get("DocName")
-    obj = Object(
+    probj = Object(
         name=args.get("ObjName", "Cone"),
         type="Part::Cone",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _create_object_gui(doc_name, obj))
+    rpc_request_queue.put(lambda: _create_object_gui(doc_name, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]

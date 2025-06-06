@@ -53,18 +53,18 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("DocName")
     label = args.get("ObjLabel")
-    obj = Object(
+    probj = Object(
         name=label,
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _line_from_vectors_gui(doc_name, label, obj))
+    rpc_request_queue.put(lambda: _line_from_vectors_gui(doc_name, label, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _line_from_vectors_gui(doc_name, label, obj):
+def _line_from_vectors_gui(doc_name, label, probj):
     doc = FreeCAD.getDocument(doc_name)
-    p1 = FreeCAD.Vector(obj.properties["X1"], obj.properties["Y1"], obj.properties["Z1"])
-    p2 = FreeCAD.Vector(obj.properties["X2"], obj.properties["Y2"], obj.properties["Z2"])
+    p1 = FreeCAD.Vector(probj.properties["X1"], probj.properties["Y1"], probj.properties["Z1"])
+    p2 = FreeCAD.Vector(probj.properties["X2"], probj.properties["Y2"], probj.properties["Z2"])
     line = Draft.make_line(p1, p2)
     line.Label = label
     doc.recompute()

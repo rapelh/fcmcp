@@ -10,13 +10,13 @@ tool_type = types.Tool(
                 description="Create a labeled line object from vectors in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["Doc"],
+                    "required": ["DocName"],
                     "properties": {
                         "Doc": {
                             "type": "string",
                             "description": "Name of document in which to create",
                         },
-                        "Label": {
+                        "ObjLabel": {
                             "type": "string",
                             "description": "Label for object to create",
                         },
@@ -39,25 +39,25 @@ tool_type = types.Tool(
             )
 
 def do_it(args):
-    doc_name = args.get("Doc")
-    label = args.get("Label")
-    obj = Object(
+    doc_name = args.get("DocName")
+    label = args.get("ObjLabel")
+    probj = Object(
         name=label,
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _wire_from_points_gui(doc_name, label, obj))
+    rpc_request_queue.put(lambda: _wire_from_points_gui(doc_name, label, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _wire_from_points_gui(doc_name, label, obj):
+def _wire_from_points_gui(doc_name, label, probj):
     doc = FreeCAD.getDocument(doc_name)
-    vectors = obj.properties["Vectors"]
+    vectors = probj.properties["Vectors"]
     closed = None
-    if "Closed" in obj.properties:
-        closed = obj.properties["Closed"]
+    if "Closed" in probj.properties:
+        closed = probj.properties["Closed"]
     face = None
-    if closed and "Face" in obj.properties:
-        face = obj.properties["Face"]
+    if closed and "Face" in probj.properties:
+        face = probj.properties["Face"]
     vectorlist = []
     for v in vectors:
         vectorlist.append(FreeCAD.Vector(v))
@@ -65,7 +65,7 @@ def _wire_from_points_gui(doc_name, label, obj):
     wire.Label = label
     doc.recompute()
     try:
-        ser = serialize_object(line)
+        ser = serialize_object(wire)
     except Exception as e:
         return False, str(e)
     try:

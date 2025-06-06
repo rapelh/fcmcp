@@ -33,18 +33,18 @@ tool_type = types.Tool(
 def do_it(args):
     doc_name = args.get("DocName")
     label = args.get("ObjLabel")
-    obj = Object(
+    probj = Object(
         name=label,
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _line_from_shape_gui(doc_name, label, obj))
+    rpc_request_queue.put(lambda: _line_from_shape_gui(doc_name, label, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _line_from_shape_gui(doc_name, label, obj):
+def _line_from_shape_gui(doc_name, label, probj):
     doc = FreeCAD.getDocument(doc_name)
-    ref_obj = doc.getObject(obj.properties["RefObjectName"])
-    line = Draft.make_line(ref_obj.Shape)
+    obj = doc.getObject(probj.properties["RefObjectName"])
+    line = Draft.make_line(obj.Shape)
     line.Label = label
     doc.recompute()
     try:

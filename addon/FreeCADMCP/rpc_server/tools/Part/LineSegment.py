@@ -52,22 +52,22 @@ tool_type = types.Tool(
 
 def do_it(args):
     doc_name = args.get("DocName")
-    obj = Object(
+    probj = Object(
         name=args.get("ObjName", "Line"),
         type="Part::LineSegment",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _create_line_segment_gui(doc_name, obj))
+    rpc_request_queue.put(lambda: _create_line_segment_gui(doc_name, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _create_line_segment_gui(doc_name, obj):
+def _create_line_segment_gui(doc_name, probj):
     doc = FreeCAD.getDocument(doc_name)
     line = Part.LineSegment()
-    line.StartPoint = (obj.properties["X1"], obj.properties["Y1"], obj.properties["Z1"])
-    line.EndPoint = (obj.properties["X2"], obj.properties["Y2"], obj.properties["Z2"])
-    obj_ins = doc.addObject("Part::Feature", obj.name)
-    obj_ins.Shape= line.toShape()
+    line.StartPoint = (probj.properties["X1"], probj.properties["Y1"], probj.properties["Z1"])
+    line.EndPoint = (probj.properties["X2"], probj.properties["Y2"], probj.properties["Z2"])
+    obj = doc.addObject("Part::Feature", probj.name)
+    obj.Shape= line.toShape()
     doc.recompute()
-    return True, json.dumps(serialize_object(obj_ins))
+    return True, json.dumps(serialize_object(obj))

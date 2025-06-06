@@ -20,7 +20,7 @@ tool_type = types.Tool(
                             "description": "Name of object to create",
                         },
                         "Properties": {
-                            "Base": {
+                            "BaseName": {
                                 "type": "string",
                                 "description": "Name of base object shape"
                             }, 
@@ -81,34 +81,34 @@ tool_type = types.Tool(
 
 def do_it(args):
     doc_name = args.get("DocName")
-    obj = Object(
+    probj = Object(
         name=args.get("ObjName", "Extrusion"),
         type="Part::Extrusion",
         analysis=args.get("Analysis", None),
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _extrude_shape_gui(doc_name, obj))
+    rpc_request_queue.put(lambda: _extrude_shape_gui(doc_name, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _extrude_shape_gui(doc_name, obj_in):
+def _extrude_shape_gui(doc_name, probj):
     doc = FreeCAD.getDocument(doc_name)
     if not doc:
         FreeCAD.Console.PrintError(f"Document '{doc_name}' not found.\n")
         return False, f"Document '{doc_name}' not found.\n"
     try:
-        obj = doc.addObject(obj_in.type, obj_in.name)
-        obj.Base = doc.getObject(obj_in.properties["Base"])
-        obj.DirMode = obj_in.properties["DirMode"]
-        obj.DirLink = doc.getObject(obj_in.properties["DirLink"])
-        obj.Dir = FreeCAD.Vector(obj_in.properties["Dir"]["X"], obj_in.properties["Dir"]["Y"], obj_in.properties["Dir"]["Z"])
-        obj.LengthFwd = float(obj_in.properties["LengthFwd"])
-        obj.LengthRev = float(obj_in.properties["LengthRev"])
-        obj.Solid = obj_in.properties["Solid"]
-        obj.Reversed = obj_in.properties["Reversed"]
-        obj.Symmetric = obj_in.properties["Symmetric"]
-        obj.TaperAngle = obj_in.properties["TaperAngle"]
-        obj.TaperAngleRev = obj_in.properties["TaperAngleRev"]
+        obj = doc.addObject(probj.type, probj.name)
+        obj.Base = doc.getObject(probj.properties["Base"])
+        obj.DirMode = probj.properties["DirMode"]
+        obj.DirLink = doc.getObject(probj.properties["DirLink"])
+        obj.Dir = FreeCAD.Vector(probj.properties["Dir"]["X"], probj.properties["Dir"]["Y"], probj.properties["Dir"]["Z"])
+        obj.LengthFwd = float(probj.properties["LengthFwd"])
+        obj.LengthRev = float(probj.properties["LengthRev"])
+        obj.Solid = probj.properties["Solid"]
+        obj.Reversed = probj.properties["Reversed"]
+        obj.Symmetric = probj.properties["Symmetric"]
+        obj.TaperAngle = probj.properties["TaperAngle"]
+        obj.TaperAngleRev = probj.properties["TaperAngleRev"]
         doc.recompute()
     except Exception as e:
         FreeCAD.Console.PrintError(f"Object '{obj.__class__}' could not be created: '{str(e)}'.\n")
