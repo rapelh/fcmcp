@@ -16,11 +16,10 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-New", 
             {
-                "Name": "TestDoc"
+                "DocName": "TestDoc"
             }
         )
         format_result(result)
-
 
         print("\nInvoking tool 'Std-AxisCross'...")
         result = await session.call_tool(
@@ -56,7 +55,7 @@ async def call_tools(session):
 
         print("\nInvoking tool 'Std-PerspectiveCamera'...")
         result = await session.call_tool(
-            "Std-PerspectivecCamera", 
+            "Std-PerspectiveCamera", 
             {}
         )
         format_result(result)
@@ -65,8 +64,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Part-Box", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBoxAAP",
+                "DocName": "TestDoc",
+                "ObjName": "TestBoxAAP",
                 "Properties":
                 {
                     "Length": 20.0,
@@ -81,8 +80,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-Placement", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBoxAAP",
+                "DocName": "TestDoc",
+                "ObjName": "TestBoxAAP",
                 "Properties":
                 {
                     "Position": {
@@ -91,7 +90,6 @@ async def call_tools(session):
                         "Z": 100.0,                          
                     },
                     "Rotation": {
-                        "Mode": "AAP",
                         "Center": {
                             "X": 10.0,
                             "Y": 10.0,
@@ -113,8 +111,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Part-Box", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBoxPYPR",
+                "DocName": "TestDoc",
+                "ObjName": "TestBoxPYPR",
                 "Properties":
                 {
                     "Length": 20.0,
@@ -129,8 +127,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-Placement", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBoxPYPR",
+                "DocName": "TestDoc",
+                "ObjName": "TestBoxPYPR",
                 "Properties":
                 {
                     "Position": {
@@ -139,7 +137,6 @@ async def call_tools(session):
                         "Z": 200.0,                          
                     },
                     "Rotation": {
-                        "Mode": "PYPR",
                         "Center": {
                             "X": 10.0,
                             "Y": 10.0,
@@ -158,7 +155,7 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-SetActiveDocument", 
             {
-                "Doc": "TestDoc"
+                "DocName": "TestDoc"
             }
         )
         format_result(result)
@@ -190,8 +187,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-SaveAs", 
             {
-                "Doc": "TestDoc",
-                "Path": "/home/ralph-apel/Test.FCStd"
+                "DocName": "TestDoc",
+                "Path": "/home/ralph-apel/TestDoc.FCStd"
             }
         )
         format_result(result)
@@ -200,8 +197,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-ToggleSelectability", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBoxAAP"
+                "DocName": "TestDoc",
+                "ObjName": "TestBoxAAP"
             }
         )
         format_result(result)
@@ -210,8 +207,8 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-ToggleVisibility", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBoxPYPR"
+                "DocName": "TestDoc",
+                "ObjName": "TestBoxPYPR"
             }
         )
         format_result(result)
@@ -223,9 +220,9 @@ async def call_tools(session):
         )
         format_result(result)
 
-        print("\nInvoking tool 'Std-Dimetric'...")
+        print("\nInvoking tool 'Std-ViewDimetric'...")
         result = await session.call_tool(
-            "Std-Dimetric", 
+            "Std-ViewDimetric", 
             {}
         )
         format_result(result)
@@ -297,7 +294,7 @@ async def call_tools(session):
         result = await session.call_tool(
             "Std-ViewScreenshot", 
             {
-                "ViewName": "ViewFitAll"
+                "ViewName": "Isometric"
             }
         )
         format_result(result)
@@ -361,7 +358,41 @@ doc.recompute()
         result = await session.call_tool(
             "DumpDocument", 
             {
-                "Doc": "TestDoc"
+                "DocName": "TestDoc"
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Std-VarSet'...")
+        result = await session.call_tool(
+            "Std-VarSet", 
+            {
+                "DocName": "TestDoc",
+                "ObjName": "TestVarSet",
+                "Properties": {
+                    "Variables": [
+                        {
+                            "Type": "App::PropertyInteger",
+                            "Name": "I",
+                            "Value": 1,
+                        },
+                        {
+                            "Type": "App::PropertyBool",
+                            "Name": "B",
+                            "Value": True,
+                        },
+                        {
+                            "Type": "App::PropertyString",
+                            "Name": "S",
+                            "Value": "blah",
+                        },
+                        {
+                            "Type": "App::PropertyFloat",
+                            "Name": "F",
+                            "Value": 2.2,
+                        }
+                    ]
+                }
             }
         )
         format_result(result)
