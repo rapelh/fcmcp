@@ -11,52 +11,135 @@ async def call_tools(session):
             if msg[0] == 'tools':
                 for tool in msg[1]:
                     print(f"- {tool}")
-            #print("  Parameters:")
-            #for param in tool.parameters:
-            #    print(f"    - {param.name} ({param.parameter_type}): {param.description}")
 
         print("\nInvoking tool 'Std-New'...")
         result = await session.call_tool(
             "Std-New", 
             {
-                "Name": "TestDoc"
+                "DocName": "TestDoc"
             }
         )
         format_result(result)
 
-        print("\nInvoking tool 'Draft-Line-FromVectors'...")
+        print("\nInvoking tool 'Draft-Arc-ByCenterRadiusAngles'...")
         result = await session.call_tool(
-            "Draft-Line-FromVectors", 
+            "Draft-Arc-ByCenterRadiusAngles", 
             {
-                "Doc": "TestDoc",
-                "Label": "TestLineFromVectors_1",
-                "Properties":
-                {
-                    "X1": 10.0,
-                    "Y1": 20.0,
-                    "Z1": 30.0,
-                    "X2": 20.0,
-                    "Y2": 40.0,
-                    "Z2": 60.0,
+                "DocName": "TestDoc",
+                "ObjLabel": "TestArcByCenterRadiusAngles",
+                "Properties": {
+                    "Center": {
+                        "X": 10.0,
+                        "Y": 20.0,
+                        "Z": 30.0,
+                    },
+                    "Radius": 20.0,
+                    "StartAngle": 40.0,
+                    "EndAngle": 60.0,
                 }
             }
         )
         format_result(result)
 
-        print("\nInvoking tool 'Draft-Line-FromVectors'...")
+        print("\nInvoking tool 'Draft-Circle-ByCenterRadius'...")
         result = await session.call_tool(
-            "Draft-Line-FromVectors", 
+            "Draft-Circle-ByCenterRadius", 
             {
-                "Doc": "TestDoc",
-                "Label": "TestLineFromVectors_2",
+                "DocName": "TestDoc",
+                "ObjLabel": "TestCircle-ByCenterRadius",
+                "Properties": {
+                    "Center": {
+                        "X": 10.0,
+                        "Y": 20.0,
+                        "Z": 30.0,
+                    },
+                    "Radius": 20.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Draft-Arc-ByThreeVectors'...")
+        result = await session.call_tool(
+            "Draft-Arc-ByThreeVectors", 
+            {
+                "DocName": "TestDoc",
+                "ObjLabel": "TestArcByByThreeVectors",
+                "Properties": {
+                    "X1": 10.0,
+                    "Y1": 20.0,
+                    "Z1": 30.0,
+                    "X2": 20.0,
+                    "Y2": 10.0,
+                    "Z2": 0.0,
+                    "X3": 20.0,
+                    "Y3": 20.0,
+                    "Z3": 10.0,
+                    "Radius": 20.0,
+                    "StartAngle": 40.0,
+                    "EndAngle": 60.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Part-RegularPolygon'...")
+        result = await session.call_tool(
+            "Part-RegularPolygon", 
+            {
+                "DocName": "TestDoc",
+                "ObjName": "TestRegularPolygon",
                 "Properties":
                 {
-                    "X1": 15.0,
-                    "Y1": 25.0,
-                    "Z1": 35.0,
-                    "X2": 25.0,
-                    "Y2": 45.0,
-                    "Z2": 65.0,
+                    "Polygon": 6,
+                    "Circumradius": 200.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Draft-Fillet-FromTwoEdges'...")
+        result = await session.call_tool(
+            "Draft-Fillet-FromTwoEdges", 
+            {
+                "DocName": "TestDoc",
+                "ObjName": "TestRegularPolygon",
+                "Properties":
+                {
+                    "Label": "FilletFromTwoEdges",
+                    "EdgeIndex1": 0,
+                    "EdgeIndex2": 1,
+                    "Radius": 10.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Draft-Fillet-FromObjectEdges'...")
+        result = await session.call_tool(
+            "Draft-Fillet-FromObjectEdges", 
+            {
+                "DocName": "TestDoc",
+                "ObjName": "TestRegularPolygon",
+                "Properties":
+                {
+                    "Label": "FilletFromObjectEdges",
+                    #"ObjectEdgeIndices": [0, 1, 2],
+                    "Radius": 10.0,
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Draft-Circle-FromCircularEdge'...")
+        result = await session.call_tool(
+            "Draft-Circle-FromCircularEdge", 
+            {
+                "DocName": "TestDoc",
+                "ObjLabel": "TestCircle-FromCircularEdge",
+                "Properties": {
+                    "EdgeObjectLabel": "FilletFromTwoEdges",
+                    "EdgeIndex": 1,
                 }
             }
         )
@@ -66,29 +149,72 @@ async def call_tools(session):
         result = await session.call_tool(
             "Draft-Wire-FromVectors", 
             {
-                "Doc": "TestDoc",
-                "Label": "TestWireFromVectors",
-                "Properties":
-                {
-                    "Vectors": [[15.0, 25.0, 35.0], [15.0, 45.0, 65.0]],
+                "DocName": "TestDoc",
+                "ObjLabel": "TestWire-FromVectors",
+                "Properties": {
+                    "Vectors": [
+                        [0.0, 10.0, 20.0],
+                        [0.0, 5.0, 30.0],
+                        [0.0, 15.0, 35.0],
+                        [0.0, 20.0, 10.0],
+                    ],
                     "Closed": True,
-                    "Face": False
+                    "Face": True,
                 }
             }
         )
         format_result(result)
 
-        print("\nInvoking tool 'Part-Box'...")
+        print("\nInvoking tool 'Draft-BSpline-FromVectors'...")
         result = await session.call_tool(
-            "Part-Box", 
+            "Draft-BSpline-FromVectors", 
             {
-                "Doc": "TestDoc",
-                "Name": "TestBox",
-                "Properties":
-                {
-                    "Length": 20.0,
-                    "Width": 20.0,
-                    "Height": 20.0,
+                "DocName": "TestDoc",
+                "ObjLabel": "TestBSpline-FromVectors",
+                "Properties": {
+                    "Vectors": [
+                        [0.0, 10.0, 20.0],
+                        [0.0, 5.0, 30.0],
+                        [0.0, 15.0, 35.0],
+                        [0.0, 20.0, 10.0],
+                    ],
+                    "Closed": False,
+                    "Face": False,
+                }
+            }
+        )
+        format_result(result)
+
+
+
+        print("\nInvoking tool 'Part-Wire'...")
+        result = await session.call_tool(
+            "Part-Wire", 
+            {
+                "DocName": "TestDoc",
+                "ObjName": "TestWire",
+                "Properties": {
+                    "Vectors": [
+                        [0.0, 30.0, 15.0],
+                        [0.0, 55.0, 35.0],
+                        [0.0, 15.0, 25.0],
+                        [0.0, 25.0, 10.0],
+                    ],
+                }
+            }
+        )
+        format_result(result)
+
+        print("\nInvoking tool 'Draft-BSpline-FromWire'...")
+        result = await session.call_tool(
+            "Draft-BSpline-FromWire", 
+            {
+                "DocName": "TestDoc",
+                "ObjLabel": "TestBSpline-FromWire",
+                "Properties": {
+                    "WireName": "TestWire",
+                    "Closed": False,
+                    "Face": False,
                 }
             }
         )
