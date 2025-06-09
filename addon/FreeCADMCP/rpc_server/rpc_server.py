@@ -139,7 +139,7 @@ def start_rpc_server(host="localhost", port=9875):
             nam, ext = os.path.splitext(file)
             if ext == '.py' and nam != '__init__':
                 mod, _ = os.path.splitext(os.path.relpath(os.path.join(root, file), start=os.path.dirname(base_path)))
-                print('mod', mod)
+                #print('mod', mod)
                 components = mod.split('/')
                 module = ""
                 tool = ""
@@ -151,8 +151,8 @@ def start_rpc_server(host="localhost", port=9875):
                             tool = tool + "-"
                     if c < len(components) - 1:
                         module = module + "."
-                print('module', module)
-                print('tool', tool)
+                #print('module', module)
+                #print('tool', tool)
                 tool_mods[tool] = importlib.import_module(module)
                 tools_available.append(tool_mods[tool].tool_type)
     tool_names = [t.name for t in tools_available]
