@@ -6,8 +6,8 @@ from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
 from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
-                name="Draft-Wire-FromVectors",
-                description="Create a labeled line object from vectors in a named document",
+                name="Draft-BSpline-FromVectors",
+                description="Create a labeled bspline object from vectors in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["DocName"],
@@ -61,11 +61,11 @@ def _wire_from_points_gui(doc_name, label, probj):
     vectorlist = []
     for v in vectors:
         vectorlist.append(FreeCAD.Vector(v))
-    wire = Draft.make_wire(vectorlist, closed=closed, face=face)
-    wire.Label = label
+    bspline = Draft.make_bspline(vectorlist, closed=closed, face=face)
+    bspline.Label = label
     doc.recompute()
     try:
-        ser = serialize_object(wire)
+        ser = serialize_object(bspline)
     except Exception as e:
         return False, str(e)
     try:

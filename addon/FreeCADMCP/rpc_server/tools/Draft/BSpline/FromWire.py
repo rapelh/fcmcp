@@ -1,13 +1,14 @@
 import mcp.types as types
 import FreeCAD
 import Draft
+import Part
 import json
 from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
 from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
-                name="Draft-Wire-FromVectors",
-                description="Create a labeled line object from vectors in a named document",
+                name="Draft-BSpline-FromWire",
+                description="Create a labeled bspline object from a wire in a named document",
                 inputSchema={
                     "type": "object",
                     "required": ["DocName"],
@@ -21,9 +22,9 @@ tool_type = types.Tool(
                             "description": "Label for object to create",
                         },
                         "Properties": {
-                            "Vectors": {
-                                "type": "number",
-                                "description": "List of vectors."
+                            "WireName": {
+                                "type": "string",
+                                "description": "Name of reference object whos shape is the reference wire."
                             },
                             "Closed": {
                                 "type": "boolean",
@@ -45,27 +46,25 @@ def do_it(args):
         name=label,
         properties=args.get("Properties", {}),
     )
-    rpc_request_queue.put(lambda: _wire_from_points_gui(doc_name, label, probj))
+    rpc_request_queue.put(lambda: _bspline_from_wire_gui(doc_name, label, probj))
     res, text = rpc_response_queue.get()
     return [types.TextContent(type="text", text=text)]
 
-def _wire_from_points_gui(doc_name, label, probj):
+def _bspline_from_wire_gui(doc_name, label, probj):
     doc = FreeCAD.getDocument(doc_name)
-    vectors = probj.properties["Vectors"]
+    obj = doc.getObject(probj.properties["WireName"])
+    wire = obj.Shape
     closed = None
     if "Closed" in probj.properties:
         closed = probj.properties["Closed"]
     face = None
     if closed and "Face" in probj.properties:
         face = probj.properties["Face"]
-    vectorlist = []
-    for v in vectors:
-        vectorlist.append(FreeCAD.Vector(v))
-    wire = Draft.make_wire(vectorlist, closed=closed, face=face)
-    wire.Label = label
+    bspline = Draft.make_bspline(wire, closed=closed, face=face)
+    bspline.Label = label
     doc.recompute()
     try:
-        ser = serialize_object(wire)
+        ser = serialize_object(bspline)
     except Exception as e:
         return False, str(e)
     try:

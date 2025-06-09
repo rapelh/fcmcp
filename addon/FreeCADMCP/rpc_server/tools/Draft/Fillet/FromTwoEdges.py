@@ -6,11 +6,11 @@ from rpc_server.rpc_server import rpc_request_queue, rpc_response_queue, Object
 from rpc_server.serialize import serialize_object
 
 tool_type = types.Tool(
-                name="Draft-Name-FromTwoEdges",
+                name="Draft-Fillet-FromTwoEdges",
                 description="Create a labeled line object from vectors in a named document",
                 inputSchema={
                     "type": "object",
-                    "required": ["DocName"],
+                    "required": ["DocName", "ObjName"],
                     "properties": {
                         "DocName": {
                             "type": "string",
@@ -21,6 +21,10 @@ tool_type = types.Tool(
                             "description": "Name of object to get edges from",
                         },
                         "Properties": {
+                            "Label": {
+                                "type": "string",
+                                "description": "Label of fillet to create"
+                            }, 
                             "EdgeIndex1": {
                                 "type": "integer",
                                 "description": "Index of first edge in Shape.Edges of named object"
@@ -54,6 +58,7 @@ def _fillet_from_two_edges_gui(doc_name, obj_name, probj):
     e1 = doc.getObject(obj_name).Shape.Edges[probj.properties["EdgeIndex1"]]
     e2 = doc.getObject(obj_name).Shape.Edges[probj.properties["EdgeIndex2"]]
     fillet = Draft.make_fillet([e1, e2], radius=probj.properties["Radius"])
+    fillet.Label = probj.properties["Label"]
     doc.recompute()
     try:
         ser = serialize_object(fillet)
